@@ -34,6 +34,9 @@ class Table:
                     left_pawns -= 1
 
     def print(self):
+        """
+        Print the table on standard output
+        """
         for col in range(0, self.tableSize):
             for line in range(0, self.tableSize):
                 if self.places[col, line].pawn is None:
@@ -46,7 +49,9 @@ class Table:
         print("")
 
     def neighbors(self, place, free=False):
-        """Return List of the neighbors"""
+        """
+        Return List of the free or not neighbors of a place, according to the value of the arg free
+        """
         neighbors = []
         for colMove, lineMove in place.allowedMoves:
             col, line = place.getCoords()[0] + colMove, place.getCoords()[1] + lineMove
@@ -55,6 +60,11 @@ class Table:
         return neighbors
 
     def move(self, startPlace, destinationPlace):
+        """
+        Move the pawn in the start place to destination place, return True is the move
+        is possible, False if not
+        """
+        # If the destination place is among the list of empty neighbors
         if destinationPlace in self.neighbors(startPlace, True):
             destinationPlace.placePawn(startPlace.pawn)
             startPlace.removePawn()
@@ -64,6 +74,9 @@ class Table:
         return False
 
     def finish(self, place):
+        """
+        Check if the game is finished
+        """
         colPlace, linePlace = place.getCoords()
         # #################### HORIZONTAL ####################
         count = self.nbPawn - 1  # -1 because the current place
@@ -158,5 +171,4 @@ class Table:
                     return True
                 col1 -= 1
                 line1 += 1
-
         return False
