@@ -1,0 +1,69 @@
+#!/usr/bin/python3.6
+import socket
+import sys
+from threading import Thread
+
+from Fanorona.Network.AppClient import *
+
+
+class ThreadRcvClient(Thread):
+    """Thread that manage message received from clients"""
+
+    def __init__(self, appClient: AppClient, host, port):
+        Thread.__init__(self)
+        self.connexion = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            self.connexion.connect((host, port))
+        except socket.error:
+            print("Connexion error")
+            sys.exit()
+        else:
+            print("Connexion established")
+        self.appClient = appClient
+
+    def run(self) -> None:
+        while 1:
+            msgServer = self.connexion.recv(1024).decode("Utf8")
+            action = msgServer.split(';')[0]
+            print(msgServer)
+            if action == "you":  # you;turn;color
+                msgServer = msgServer.split(";")
+                self.appClient.turn = msgServer[1]
+                # self.appClient.player = msgServer[2]
+                self.connexion.send("client ok".encode("Utf8"))
+            elif action == "end" or action == "":
+                self.appClient.end()
+                break
+            elif action == "new":  # new;(color,col,line)*
+                msgServer = msgServer.split(";")
+                del msgServer[0]  # delete the string new
+                self.appClient.lock.acquire()
+                for info in msgServer:
+                    self.appClient.setPawnByStr(info)
+                self.appClient.view.draw()
+                self.connexion.send("ok".encode("Utf8"))
+                self.appClient.lock.release()
+            elif action in ["mouseDown", "mouseMove", "mouseUp"]:  # action;col;line;initiator
+                msg = msgServer.split(";")
+                if len(msg) == 4:
+                    info = [int(msg[1]), int(msg[2]), ""]
+                    if msg[3] in [self.appClient.player, "server"]:
+                        info[2] = msg[3]
+                    msg[3] = self.appClient.player  # because it's the player who initiate the action
+                    msg = ";".join(msg)
+                    self.appClient.lock.acquire()
+                    if action == "mouseDown":
+                        self.appClient.mouseDown(info=info)
+                    elif action == "mouseMove":
+                        self.appClient.mouseMove(info=info)
+                    elif action == "mouseUp":
+                        self.appClient.mouseUp(info=info)
+                    self.connexion.send(msg.encode("Utf8"))
+                    self.appClient.lock.release()
+            elif action == "finish":  # finish;redScore;yellowScore
+                info = msgServer.split(";")
+                self.appClient.lock.acquire()
+                self.appClient.scores["red"] = int(info[1])
+                self.appClient.scores["yellow"] = int(info[2])
+                self.appClient.checkFinish()
+                self.appClient.lock.release()

@@ -1,0 +1,167 @@
+
+Server waiting for new connexions
+Client: Thread-2, IP : 192.168.43.68:36820 connected
+player;0;red
+Client: Thread-3, IP : 192.168.43.68:36822 connected
+player;1;yellow
+Close Server
+Server waiting for new connexions
+Client: Thread-2, IP : 192.168.43.68:36826 connected
+player;0;red
+Client: Thread-3, IP : 192.168.43.68:36828 connected
+player;1;yellow
+leave;yellow
+leave;red
+Server waiting for new connexions
+Client: Thread-2, IP : 192.168.43.68:36832 connected
+player;0;red
+Client: Thread-3, IP : 192.168.43.68:36834 connected
+player;1;yellow
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:45992 connected
+player;0;red
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:45994 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:45996 connected
+player;1;yellow
+leave;yellow
+Close Server
+Link to socket failed
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:45998 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46000 connected
+player;1;yellow
+leave;yellow
+leave;red
+Close Server
+Link to socket failed
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46002 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46004 connected
+player;1;yellow
+Close Server
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46006 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46008 connected
+player;1;yellow
+leave;red
+Link to socket failed
+Link to socket failed
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46014 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46016 connected
+player;1;yellow
+leave;red
+leave;yellow
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46024 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46026 connected
+player;1;yellow
+leave;red
+leave;yellow
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46028 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46030 connected
+player;1;yellow
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46032 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46034 connected
+player;1;yellow
+Link to socket failed
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46036 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46038 connected
+player;1;yellow
+leave;red
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46040 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46042 connected
+player;1;yellow
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46044 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46046 connected
+player;1;yellow
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46048 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46050 connected
+player;1;yellow
+leave;yellow
+leave;red
+Close Server
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46108 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46110 connected
+player;1;yellow
+leave;yellow
+leave;red
+Link to socket failed
+Link to socket failed
+Link to socket failed
+Link to socket failed
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46112 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46114 connected
+player;1;yellow
+leave;yellow
+leave;red
+Close Server
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46116 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46118 connected
+player;1;yellow
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46122 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46124 connected
+player;1;yellow
+leave;yellow
+leave;red
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46126 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46128 connected
+player;1;yellow
+leave;red
+leave;yellow
+Close Server
+Link to socket failed
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46130 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46132 connected
+player;1;yellow
+leave;red
+Server waiting for new connexions
+Client: Thread-2, IP : 127.0.0.1:46134 connected
+player;0;red
+Client: Thread-3, IP : 127.0.0.1:46136 connected
+player;1;yellow
+leave;red
+leave;yellow
+Client: Thread-4, IP : 127.0.0.1:46138 connected
+player;1;yellow
+Client: Thread-5, IP : 127.0.0.1:46140 connected
+player;2;red
+leave;red
+leave;yellow
+Close Server
+Server waiting for new connexions
+Client: Thread-2, IP : 192.168.200.225:56622 connected
+player;0;red
+leave;red
+Close Server
