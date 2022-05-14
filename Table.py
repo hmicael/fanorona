@@ -12,20 +12,26 @@ class Table:
         self.winner = ""
         for line in range(0, self.tableSize):
             for col in range(0, self.tableSize):
-                allowedMoves = []
-                # setting oblique move
-                listAllowedMoves = [(0, -1), (1, 0), (0, 1), (-1, 0)]  # + move
+                allowedMoves = []  # List where is listed allowed moves for a given place
+                # List of all possible moves up, down, left, right
+                listAllowedMoves = [(0, -1), (1, 0), (0, 1), (-1, 0)]
+                # Setting list of all possible moves up, down, left, right, oblique
                 if line % 2 == col % 2:  # oblique
                     listAllowedMoves = [(0, -1), (1, 0), (0, 1), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
                 for colMove, lineMove in listAllowedMoves:
                     col1, line1 = col + colMove, line + lineMove
-                    # if col1, line1, the next position is not out of range
-                    if 0 <= line1 < self.tableSize and 0 <= col1 < self.tableSize:
+                    # If col1, line1, the next position is not out of range
+                    # Then (colMove, lineMove) is added to the liste of allowed moves for this place
+                    if col1 in range(0, self.tableSize) and line1 in range(0, self.tableSize):
                         allowedMoves.append((colMove, lineMove))
+                # Set the Place inside the Table
                 self.places[col, line] = Place(allowedMoves, col, line)
         # self.randomPlacing()
 
     def randomPlacing(self):
+        """
+        Function which place randomly the pawn on the Table
+        """
         for pawn in ["red", "yellow"]:
             left_pawns = self.nbPawn
             while left_pawns > 0:
@@ -52,6 +58,9 @@ class Table:
         """
         Return List of the free or not neighbors of a place, according to the value of the arg free
         """
+        if type(place) != 'Place':
+            raise TypeError("place must be a Place object")
+
         neighbors = []
         for colMove, lineMove in place.allowedMoves:
             col, line = place.getCoords()[0] + colMove, place.getCoords()[1] + lineMove
@@ -61,13 +70,18 @@ class Table:
 
     def move(self, startPlace, destinationPlace):
         """
-        Move the pawn in the start place to destination place, return True is the move
+        Move the pawn in the start place to destination place, return True if the move
         is possible, False if not
         """
+        if type(startPlace) != 'Place' and type(destinationPlace) != 'Place':
+            raise TypeError("startPlace and destinationPlace must be a Place object")
+
         # If the destination place is among the list of empty neighbors
         if destinationPlace in self.neighbors(startPlace, True):
+            # The pawn is placed on the destination place and remove from the old one
             destinationPlace.placePawn(startPlace.pawn)
             startPlace.removePawn()
+            # Check if the game is finished to find out the winner
             if self.finish(destinationPlace):
                 self.winner = destinationPlace.pawn
             return True
@@ -77,6 +91,9 @@ class Table:
         """
         Check if the game is finished
         """
+        if type(place) != 'Place':
+            raise TypeError("place must be a Place object")
+
         colPlace, linePlace = place.getCoords()
         # #################### HORIZONTAL ####################
         count = self.nbPawn - 1  # -1 because the current place
@@ -87,6 +104,7 @@ class Table:
                 count -= 1
             else:
                 break
+            # If count == O, then the is enough of aligned pawn to win the game
             if count == 0:
                 return True
             col1 -= 1
@@ -124,7 +142,7 @@ class Table:
         if linePlace % 2 == colPlace % 2:  # oblique
             # oblique up left to down right
             count = self.nbPawn - 1  # -1 because the current place
-            # move to left up
+            # move to up left
             col1, line1 = colPlace - 1, linePlace - 1
             while (col1, line1) in self.places.keys():
                 if self.places[col1, line1].pawn == place.pawn:
@@ -135,7 +153,7 @@ class Table:
                     return True
                 col1 -= 1
                 line1 -= 1
-            # move to right down
+            # move to down right
             col1, line1 = colPlace + 1, linePlace + 1
             while (col1, line1) in self.places.keys():
                 if self.places[col1, line1].pawn == place.pawn:
@@ -149,7 +167,7 @@ class Table:
 
             # oblique up right to down left
             count = self.nbPawn - 1  # -1 because the current place
-            # move to right up
+            # move to up right
             col1, line1 = colPlace + 1, linePlace - 1
             while (col1, line1) in self.places.keys():
                 if self.places[col1, line1].pawn == place.pawn:
@@ -160,7 +178,7 @@ class Table:
                     return True
                 col1 += 1
                 line1 -= 1
-            # move to left down
+            # move to down left
             col1, line1 = colPlace - 1, linePlace + 1
             while (col1, line1) in self.places.keys():
                 if self.places[col1, line1].pawn == place.pawn:
