@@ -14,7 +14,7 @@ class Application(Frame):
         Frame.__init__(self)
         self.turn = 0
         self.hits = 0
-        self.xMove, self.yMove = 0, 0  # determine the movement of the mouse
+        self.xMove, self.yMove = 0, 0  # Determine the movement of the mouse
         self.scores = {
             "red": 0,
             "yellow": 0
@@ -43,26 +43,35 @@ class Application(Frame):
 
     def packing(self):
         fileMenu = Menubutton(self, text='File')
-        me1 = Menu(fileMenu)
-        me1.add_command(label='New', underline=0, command=self.new)
-        me1.add_command(label='Save', underline=0, command=self.save)
-        me1.add_command(label='Restore', underline=0, command=self.restore)
-        me1.add_command(label='Exit', underline=0, command=self.close)
-        fileMenu.configure(menu=me1)
+        menu1 = Menu(fileMenu)
+        menu1.add_command(label='New', underline=0, command=self.new)
+        menu1.add_command(label='Save', underline=0, command=self.save)
+        menu1.add_command(label='Restore', underline=0, command=self.restore)
+        menu1.add_command(label='Exit', underline=0, command=self.close)
+        fileMenu.configure(menu=menu1)
         fileMenu.pack(anchor=NW)
 
-    def mouseDown(self, event=None, info=None):
-        if event and info is None:
+    def mouseDown(self, event=None, info=[]):
+        if type(info) != 'list':
+            raise TypeError("Info must be a list")
+
+        if event and not info:
             info = [event.x, event.y, ""]
         self.view.mouseDown(info)
 
-    def mouseMove(self, event=None, info=None):
-        if event and info is None:
+    def mouseMove(self, event=None, info=[]):
+        if type(info) != 'list':
+            raise TypeError("Info must be a list")
+
+        if event and not info:
             info = [event.x, event.y, ""]
         self.view.mouseMove(info)
 
-    def mouseUp(self, event=None, info=None):
-        if event and info is None:
+    def mouseUp(self, event=None, info=[]):
+        if type(info) != 'list':
+            raise TypeError("Info must be a list")
+
+        if event and not info:
             info = [event.x, event.y, ""]
         self.view.mouseUp(info)
         return self.checkFinish()
@@ -128,7 +137,6 @@ class Application(Frame):
                 for key in self.labels.keys():
                     self.labels[key].config(text="{} : {} points".format(key.upper(), self.scores[key]))
             file.close()
-
 
 if __name__ == '__main__':
     Application().mainloop()
