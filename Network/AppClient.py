@@ -49,8 +49,8 @@ class AppClient(Application):
     def close(self, event=None):
         self.threadConnexion.connexion.send("leave".encode("Utf8"))
 
-    def mouseDown(self, event=None, info=None):
-        if info is None:
+    def mouseDown(self, event=None, info=[]):
+        if not info:
             info = [event.x, event.y, self.player]
         Application.mouseDown(self, event, info)
         msg = "mouseDown;{};{};{}".format(info[0], info[1], self.player)
@@ -59,8 +59,8 @@ class AppClient(Application):
         except BrokenPipeError:
             sys.exit()
 
-    def mouseMove(self, event=None, info=None):
-        if info is None:
+    def mouseMove(self, event=None, info=[]):
+        if not info:
             info = [event.x, event.y, self.player]
         Application.mouseMove(self, event, info)
         msg = "mouseMove;{};{};{}".format(info[0], info[1], self.player)
@@ -69,8 +69,8 @@ class AppClient(Application):
         except BrokenPipeError:
             sys.exit()
 
-    def mouseUp(self, event=None, info=None):
-        if info is None:
+    def mouseUp(self, event=None, info=[]):
+        if not info:
             info = [event.x, event.y, self.player]
         Application.mouseUp(self, event, info)
         msg = "mouseUp;{};{};{}".format(info[0], info[1], self.player)
