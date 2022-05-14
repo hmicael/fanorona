@@ -7,6 +7,9 @@ class TableViewNetwork(TableView):
         TableView.__init__(self, app)
 
     def mouseDown(self, info):
+        if type(info) != 'list':
+            raise TypeError("Info must be a list")
+
         self.colStart, self.lineStart = int(info[0]), int(info[1])
         self.startPlace = self.findPlaceByRealPosition((self.colStart, self.lineStart))
         # placing a pawn on an empty place
@@ -26,6 +29,9 @@ class TableViewNetwork(TableView):
             self.selectedItem = None
 
     def mouseUp(self, info):
+        if type(info) != 'list':
+            raise TypeError("Info must be a list")
+
         if self.selectedItem in self.pawns:
             colDestination, lineDestination = int(info[0]), int(info[1])
             destinationPlace = self.findPlaceByRealPosition((colDestination, lineDestination))
