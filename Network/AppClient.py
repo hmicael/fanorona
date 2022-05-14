@@ -50,6 +50,9 @@ class AppClient(Application):
         self.threadConnexion.connexion.send("leave".encode("Utf8"))
 
     def mouseDown(self, event=None, info=[]):
+        if type(info) != 'list':
+            raise TypeError("Info must be a list")
+
         if not info:
             info = [event.x, event.y, self.player]
         Application.mouseDown(self, event, info)
@@ -60,6 +63,9 @@ class AppClient(Application):
             sys.exit()
 
     def mouseMove(self, event=None, info=[]):
+        if type(info) != 'list':
+            raise TypeError("Info must be a list")
+
         if not info:
             info = [event.x, event.y, self.player]
         Application.mouseMove(self, event, info)
@@ -70,6 +76,9 @@ class AppClient(Application):
             sys.exit()
 
     def mouseUp(self, event=None, info=[]):
+        if type(info) != 'list':
+            raise TypeError("Info must be a list")
+
         if not info:
             info = [event.x, event.y, self.player]
         Application.mouseUp(self, event, info)
