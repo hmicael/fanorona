@@ -1,4 +1,4 @@
-#!/usr/bin/python3.6
+#!/usr/bin/python3.8
 from random import choice
 
 from Fanorona.Place import Place

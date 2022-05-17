@@ -1,4 +1,4 @@
-#!/usr/bin/python3.6
+#!/usr/bin/python3.8
 from threading import Lock
 
 from Fanorona.Application import Application

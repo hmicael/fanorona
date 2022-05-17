@@ -1,4 +1,4 @@
-#!/usr/bin/python3.6
+#!/usr/bin/python3.8
 from threading import Thread
 
 from Fanorona.Network.AppServer import AppServer
