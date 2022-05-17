@@ -5,7 +5,9 @@ from Fanorona.Network.ThreadRcvServer import ThreadRcvServer
 
 
 class ThreadConnexion(Thread):
-    """Thread that manage new connexion"""
+    """
+    Thread that manage new connexion
+    """
 
     def __init__(self, appServer, connexion):
         Thread.__init__(self)
@@ -36,6 +38,7 @@ class ThreadConnexion(Thread):
                 )
                 self.appServer.writeLog(msgServer)
                 newConnexion.send("you;{};{}".format(self.appServer.turn, color).encode("Utf8"))
+                # Send information about the new created client to other client
                 for key in self.appServer.clientConnexions:
                     if key != threadRcvServer.color:
                         self.appServer.clientConnexions[key].send(msgServer.encode("Utf8"))

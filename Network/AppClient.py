@@ -7,6 +7,9 @@ from Fanorona.Network.ThreadRcvClient import *
 
 
 class AppClient(Application):
+    """
+    Client side application
+    """
 
     def __init__(self, host, port):
         Application.__init__(self)
@@ -26,7 +29,9 @@ class AppClient(Application):
         self.view.pack(padx=10, pady=10)
 
     def setPawnByStr(self, info):
-        """set pawn place by str info: color,col,line"""
+        """
+        Set pawn place by str info: color,col,line
+        """
         info = info.split(',')
         if info[0] in ["red", "yellow"]:
             try:
@@ -90,4 +95,4 @@ class AppClient(Application):
 
 
 if __name__ == '__main__':
-    AppClient("192.168.200.167", 40000).mainloop()
+    AppClient("192.168.200.208", 40000).mainloop()

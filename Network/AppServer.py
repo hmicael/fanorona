@@ -9,7 +9,9 @@ from Fanorona.Network.ThreadConnexion import *
 
 
 class AppServer(Application):
-    """Server side application"""
+    """
+    Server side application
+    """
 
     def __init__(self, host, port):
         Application.__init__(self)
@@ -75,7 +77,9 @@ class AppServer(Application):
         sys.exit()
 
     def gameStart(self):
-        """method to check if the game can start"""
+        """
+        Method to check if the game can start
+        """
         if len(self.clientConnexions) == 2 and self.canStart is False:
             self.canStart = True
             return self.new()
@@ -87,6 +91,9 @@ class AppServer(Application):
         return "leave;{}".format(colorThread)
 
     def getPawnsCoord(self):
+        """
+        Return Pawn's coord in str: color;x;y
+        """
         coord = ""
         for key in self.table.places.keys():
             if self.table.places[key].pawn:
@@ -95,4 +102,4 @@ class AppServer(Application):
 
 
 if __name__ == '__main__':
-    AppServer("192.168.200.167", 40000).mainloop()
+    AppServer("192.168.200.208", 40000).mainloop()

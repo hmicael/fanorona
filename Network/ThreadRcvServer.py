@@ -20,7 +20,6 @@ class ThreadRcvServer(Thread):
             except Exception:
                 break
             else:
-                print(msgClient)
                 action = msgClient.split(';')[0]
                 if action == "":
                     break
@@ -45,7 +44,7 @@ class ThreadRcvServer(Thread):
                         self.appServer.clientConnexions[key].send(msg.encode("Utf8"))
                 elif action in ["mouseDown", "mouseMove", "mouseUp"]:  # action;col;line;initiator
                     msg = msgClient.split(";")
-                    if len(msg) == 4:
+                    if len(msg) == 4: # To be sure if the msg is correct
                         info = [int(msg[1]), int(msg[2]), ""]
                         if msg[3] in ["red", "yellow", "server"]:
                             info[2] = msg[3]
@@ -71,6 +70,9 @@ class ThreadRcvServer(Thread):
                     self.appServer.lock.release()
 
     def sendMsg(self, msgServer):
+        """
+        Send message to other client except the sender
+        """
         for key in self.appServer.clientConnexions:
             if key != self.color:
                 self.appServer.clientConnexions[key].send(msgServer.encode("Utf8"))
