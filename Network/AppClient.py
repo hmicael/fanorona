@@ -54,8 +54,8 @@ class AppClient(Application):
     def close(self, event=None):
         self.threadConnexion.connexion.send("leave".encode("Utf8"))
 
-    def mouseDown(self, event=None, info=[]):
-        if type(info) != 'list':
+    def mouseDown(self, event=None, info=()):
+        if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
         if not info:
@@ -67,8 +67,8 @@ class AppClient(Application):
         except BrokenPipeError:
             sys.exit()
 
-    def mouseMove(self, event=None, info=[]):
-        if type(info) != 'list':
+    def mouseMove(self, event=None, info=()):
+        if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
         if not info:
@@ -80,8 +80,8 @@ class AppClient(Application):
         except BrokenPipeError:
             sys.exit()
 
-    def mouseUp(self, event=None, info=[]):
-        if type(info) != 'list':
+    def mouseUp(self, event=None, info=()):
+        if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
         if not info:

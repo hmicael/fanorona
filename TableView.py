@@ -1,7 +1,7 @@
 #!/usr/bin/python3.8
 from math import sqrt
 from tkinter import *
-
+from Place import *
 
 class TableView(Canvas):
     """
@@ -85,9 +85,10 @@ class TableView(Canvas):
                     (self.create_oval(x - 15, y - 15, x + 15, y + 15, fill=self.app.table.places[coord].pawn),))
 
     def mouseDown(self, position):
+        if type(position) not in (tuple, list):
+            raise TypeError("Position must be a list")
         self.colStart, self.lineStart = int(position[0]), int(position[1])
         self.startPlace = self.findPlaceByRealPosition((self.colStart, self.lineStart))
-
         # Placing a pawn on an empty place
         # if self.startPlace.pawn is None:
         #     self.placePawn(self.startPlace)
@@ -108,7 +109,7 @@ class TableView(Canvas):
             self.selectedItem = None
 
     def mouseMove(self, position):
-        if type(position) != 'list':
+        if type(position) not in (tuple, list):
             raise TypeError("Position must be a list")
 
         colDestination, lineDestination = int(position[0]), int(position[1])
@@ -119,7 +120,7 @@ class TableView(Canvas):
             return xMove, yMove
 
     def mouseUp(self, position):
-        if type(position) != 'list':
+        if type(position) not in (tuple, list):
             raise TypeError("Position must be a list")
 
         if self.selectedItem in self.pawns: # Only pawn can be moved
@@ -145,7 +146,7 @@ class TableView(Canvas):
         """
         Return the <Place> according to the real position
         """
-        if type(position) != 'list':
+        if type(position) != tuple:
             raise TypeError("Position must be a list")
 
         distance = 1000 # 1000 just to get high distance
@@ -159,11 +160,10 @@ class TableView(Canvas):
                 coord = key
         return self.app.table.places[coord]
 
-    def placePawn(self, place):
-        if type(place) != 'Place':
-            raise TypeError("place must be a Place object")
-
-        """Place a pawn on the pressed place"""
+    def placePawn(self, place: Place):
+        """
+        Place a pawn on the pressed place
+        """
         if self.app.turn % 2 == 0:
             color = 'red'
         else:

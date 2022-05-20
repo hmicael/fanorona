@@ -3,8 +3,8 @@ import pickle
 import time
 from tkinter import *
 
-from Fanorona.Table import Table
-from Fanorona.TableView import TableView
+from Table import *
+from TableView import *
 
 
 class Application(Frame):
@@ -32,7 +32,7 @@ class Application(Frame):
 
     def spec(self):
         self.view = TableView(self)
-        self.view.draw()
+        #self.view.draw()
         self.master.title('>>>>> PLAY THIS FUCKING GAME <<<<<')
         self.view.bind("<Button-1>", self.mouseDown)
         self.view.bind("<Button1-Motion>", self.mouseMove)
@@ -51,24 +51,24 @@ class Application(Frame):
         fileMenu.configure(menu=menu1)
         fileMenu.pack(anchor=NW)
 
-    def mouseDown(self, event=None, info=[]):
-        if type(info) != 'list':
+    def mouseDown(self, event=None, info=()):
+        if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
         if event and not info:
             info = [event.x, event.y, ""]
         self.view.mouseDown(info)
 
-    def mouseMove(self, event=None, info=[]):
-        if type(info) != 'list':
+    def mouseMove(self, event=None, info=()):
+        if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
         if event and not info:
             info = [event.x, event.y, ""]
         self.view.mouseMove(info)
 
-    def mouseUp(self, event=None, info=[]):
-        if type(info) != 'list':
+    def mouseUp(self, event=None, info=()):
+        if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
         if event and not info:

@@ -1,7 +1,7 @@
 #!/usr/bin/python3.8
 from random import choice
 
-from Fanorona.Place import Place
+from Place import *
 
 
 class Table:
@@ -26,7 +26,7 @@ class Table:
                         allowedMoves.append((colMove, lineMove))
                 # Set the Place inside the Table
                 self.places[col, line] = Place(allowedMoves, col, line)
-        # self.randomPlacing()
+        self.randomPlacing()
 
     def randomPlacing(self):
         """
@@ -54,13 +54,10 @@ class Table:
             print("")
         print("")
 
-    def neighbors(self, place, free=False):
+    def neighbors(self, place: Place, free=False):
         """
         Return List of the free or not neighbors of a place, according to the value of the arg free
         """
-        if type(place) != 'Place':
-            raise TypeError("place must be a Place object")
-
         neighbors = []
         for colMove, lineMove in place.allowedMoves:
             col, line = place.getCoords()[0] + colMove, place.getCoords()[1] + lineMove
@@ -73,7 +70,7 @@ class Table:
         Move the pawn in the start place to destination place, return True if the move
         is possible, False if not
         """
-        if type(startPlace) != 'Place' and type(destinationPlace) != 'Place':
+        if type(startPlace) != Place and type(destinationPlace) != Place:
             raise TypeError("startPlace and destinationPlace must be a Place object")
 
         # If the destination place is among the list of empty neighbors
@@ -91,7 +88,7 @@ class Table:
         """
         Check if the game is finished
         """
-        if type(place) != 'Place':
+        if type(place) != Place:
             raise TypeError("place must be a Place object")
 
         colPlace, linePlace = place.getCoords()
