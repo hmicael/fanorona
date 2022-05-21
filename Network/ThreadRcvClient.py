@@ -16,7 +16,7 @@ class ThreadRcvClient(Thread):
         self.connexion = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             self.connexion.connect((host, port))
-        except socket.error as (value, message):
+        except socket.error as message:
             print('socket.error - ' + message)
             sys.exit()
         else:

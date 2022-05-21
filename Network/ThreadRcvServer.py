@@ -20,7 +20,7 @@ class ThreadRcvServer(Thread):
         while 1:
             try:
                 msg_client = self.connexion.recv(1024).decode("Utf8")
-            except socket.error as (value, message):
+            except socket.error as message:
                 print('socket.error - ' + message)
                 sys.exit()
             else:
