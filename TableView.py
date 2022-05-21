@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #!/usr/bin/python3.8
 from math import sqrt
 from tkinter import *

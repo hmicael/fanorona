@@ -1,9 +1,10 @@
 #!/usr/bin/python3.8
+# -*- coding: utf-8 -*-
 from threading import Lock
 
 from Fanorona.Application import Application
-from Fanorona.Network.TableViewNetwork import TableViewNetwork
-from Fanorona.Network.ThreadRcvClient import *
+from TableViewNetwork import TableViewNetwork
+from ThreadRcvClient import *
 
 
 class AppClient(Application):
