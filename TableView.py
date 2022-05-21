@@ -89,6 +89,8 @@ class TableView(Canvas):
         """
         Drawing pawns on the Table
         """
+        for paw in self.pawns:
+            self.delete(paw)
         self.pawns = []  # Reset of pawns
         for coord in self.app.table.places.keys():
             x, y = self.places[coord]
