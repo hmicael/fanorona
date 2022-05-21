@@ -5,7 +5,7 @@ import socket
 import sys
 from threading import Thread
 
-import AppClient
+from AppClient import AppClient
 
 
 class ThreadRcvClient(Thread):
@@ -46,7 +46,7 @@ class ThreadRcvClient(Thread):
                     self.app_client.lock.acquire()
                     for info in msg_server:
                         self.app_client.set_pawn_by_str(info)
-                    self.app_client.view.draw()
+                    self.app_client.view.draw_pawns()
                     self.connexion.send("ok".encode("Utf8"))
                     self.app_client.lock.release()
                 elif action in ["mouse_down", "mouse_move", "mouse_up"]:  # action;col;line;initiator

@@ -3,7 +3,7 @@
 
 from threading import Thread
 
-import ThreadRcvServer
+from ThreadRcvServer import ThreadRcvServer
 
 
 class ThreadConnexion(Thread):

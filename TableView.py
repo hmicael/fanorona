@@ -34,7 +34,7 @@ class TableView(Canvas):
         self.pawns = []  # List of pawns
         self.selected_item = None  # Selected pawn
         # The starting position of a pawn when it's being moved
-        self.col_start, self.lineStart = 0, 0
+        self.col_start, self.line_start = 0, 0
         # The place where the pawn start to be moved to
         self.start_place = None
         self.draw_lines_and_places()
@@ -101,17 +101,17 @@ class TableView(Canvas):
     def mouse_down(self, position):
         if type(position) not in (tuple, list):
             raise TypeError("Position must be a list")
-        self.col_start, self.lineStart = int(position[0]), int(position[1])
-        self.start_place = self.find_place_by_real_position((self.col_start, self.lineStart))
+        self.col_start, self.line_start = int(position[0]), int(position[1])
+        self.start_place = self.find_place_by_real_position((self.col_start, self.line_start))
 
         # Selecting a pawn
         # Canvas.find_closest is a function which return the closest element of the canvas
         # Here if the closest item is an pawn and if the turn match the correct color
         # then the pawn can be selected for any move
-        if self.find_closest(self.col_start, self.lineStart) in self.pawns and \
+        if self.find_closest(self.col_start, self.line_start) in self.pawns and \
                 ((self.app.turn % 2 == 0 and self.start_place.pawn == 'red') or (
                         self.app.turn % 2 == 1 and self.start_place.pawn == 'yellow')):
-            self.selected_item = self.find_closest(self.col_start, self.lineStart)
+            self.selected_item = self.find_closest(self.col_start, self.line_start)
             self.itemconfig(self.selected_item, width=3)
             # <lift> move the selected item to the first plan :
             self.lift(self.selected_item)
@@ -123,10 +123,10 @@ class TableView(Canvas):
             raise TypeError("Position must be a list")
 
         col_destination, line_destination = int(position[0]), int(position[1])
-        x_move, y_move = col_destination - self.col_start, line_destination - self.lineStart
+        x_move, y_move = col_destination - self.col_start, line_destination - self.line_start
         if self.selected_item and self.selected_item in self.pawns:
             self.move(self.selected_item, x_move, y_move)
-            self.col_start, self.lineStart = col_destination, line_destination
+            self.col_start, self.line_start = col_destination, line_destination
             return x_move, y_move
 
     def mouse_up(self, position):

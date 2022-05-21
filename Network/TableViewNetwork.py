@@ -1,7 +1,7 @@
 # !/usr/bin/python3.8
 # -*- coding: utf-8 -*-
 
-import TableView
+from TableView import TableView
 
 
 class TableViewNetwork(TableView):
@@ -12,7 +12,7 @@ class TableViewNetwork(TableView):
         if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
         self.col_start, self.line_start = int(info[0]), int(info[1])
-        self.start_place = self.findPlaceByRealPosition((self.col_start, self.line_start))
+        self.start_place = self.find_place_by_real_position((self.col_start, self.line_start))
 
         if self.find_closest(self.col_start, self.line_start) in self.pawns and (
                 info[2] == 'server' or  # selecting a pawn: only server or adequate turn/color can select a pawn

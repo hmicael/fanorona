@@ -66,14 +66,11 @@ class Table:
                 neighbors.append(self.places[col, line])
         return neighbors
 
-    def move(self, start_place, destination_place):
+    def move(self, start_place: Place, destination_place: Place):
         """
         Move the pawn in the start place to destination place, return True if the move
         is possible, False if not
         """
-        if type(start_place) != Place and type(destination_place) != Place:
-            raise TypeError("startPlace and destinationPlace must be a Place object")
-
         # If the destination place is among the list of empty neighbors
         if destination_place in self.neighbors(start_place, True):
             # The pawn is placed on the destination place and remove from the old one
@@ -85,13 +82,10 @@ class Table:
             return True
         return False
 
-    def finish(self, place):
+    def finish(self, place: Place):
         """
         Check if the game is finished
         """
-        if type(place) != Place:
-            raise TypeError("place must be a Place object")
-
         col_place, line_place = place.get_coords()
         # #################### HORIZONTAL ####################
         count = self.nb_pawn - 1  # -1 because the current place

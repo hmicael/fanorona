@@ -21,7 +21,7 @@ class AppClient(Application):
 
     def spec(self):
         self.view = TableViewNetwork(self)
-        self.view.draw()
+        self.view.draw_pawns()
         self.master.title('>>>>> PLAY THIS FUCKING GAME <<<<<')
         self.view.bind("<Button-1>", self.mouse_down)
         self.view.bind("<Button1-Motion>", self.mouse_move)

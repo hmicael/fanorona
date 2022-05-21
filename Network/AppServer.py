@@ -5,9 +5,9 @@ import socket
 import sys
 from threading import Lock
 
-import Application
-import TableViewNetwork
-import ThreadConnexion
+from Application import Application
+from TableViewNetwork import TableViewNetwork
+from ThreadConnexion import ThreadConnexion
 
 
 class AppServer(Application):
@@ -30,7 +30,7 @@ class AppServer(Application):
 
     def spec(self):
         self.view = TableViewNetwork(self)
-        self.view.draw()
+        self.view.draw_pawns()
         self.master.title('>>>>> SERVER <<<<<')
         self.view.bind("<Button-1>", self.mouse_down)
         self.view.bind("<Button1-Motion>", self.mouse_move)
@@ -65,7 +65,7 @@ class AppServer(Application):
             return "finish;{};{}".format(self.scores['red'], self.scores['yellow'])
         return False
 
-    def close(self):
+    def close(self, event=None):
         for key in self.client_connexions:
             self.client_connexions[key].send("end".encode("Utf8"))
             self.client_connexions[key].close()
