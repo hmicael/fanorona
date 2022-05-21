@@ -4,7 +4,7 @@ import socket
 import sys
 from threading import Thread
 
-import AppServer
+from AppServer import AppServer
 
 
 class ThreadRcvServer(Thread):

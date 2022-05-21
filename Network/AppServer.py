@@ -7,7 +7,7 @@ from threading import Lock
 
 from Application import Application
 from TableViewNetwork import TableViewNetwork
-from ThreadConnexion import ThreadConnexion
+import ThreadConnexion
 
 
 class AppServer(Application):
@@ -46,7 +46,7 @@ class AppServer(Application):
             self.write_log("Link to socket failed")
             sys.exit()
         else:
-            self.thread_connexion = ThreadConnexion(self, connexion)
+            self.thread_connexion = ThreadConnexion.ThreadConnexion(self, connexion)
             self.thread_connexion.start()
 
     @staticmethod
