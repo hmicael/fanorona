@@ -24,11 +24,11 @@ class TableView(Canvas):
         self.width = self.real_width - self.margin
         self.height = self.real_height - self.margin
         # Width and height of a division of the Table according to the tableSize
-        self.width_sub = (self.width - self.margin) / (self.app.table.tableSize - 1)
-        self.height_sub = (self.height - self.margin) / (self.app.table.tableSize - 1)
+        self.width_sub = (self.width - self.margin) / (self.app.table.table_size - 1)
+        self.height_sub = (self.height - self.margin) / (self.app.table.table_size - 1)
         self.places = {}
-        for line in range(0, self.app.table.tableSize):
-            for col in range(0, self.app.table.tableSize):
+        for line in range(0, self.app.table.table_size):
+            for col in range(0, self.app.table.table_size):
                 # Setting the real position of a place in the GUI
                 self.places[col, line] = ((self.margin + self.width_sub * col), (self.margin + self.height_sub * line))
         self.pawns = []  # List of pawns
@@ -46,15 +46,15 @@ class TableView(Canvas):
         """
         self.create_rectangle(self.margin, self.margin, self.width, self.height, width=7)
         k = 0
-        index_limit = self.app.table.tableSize - 1
-        for i in range(0, self.app.table.tableSize):
+        index_limit = self.app.table.table_size - 1
+        for i in range(0, self.app.table.table_size):
             # Begin : oblique line
             # If k < index_limit * 2 because only one half of table is required to draw oblique lines
             if k < index_limit * 2:
                 # At first, we start the iteration on (0,0), (k,0), ..., (k?,0) where k? is the valid value <
                 # index_limit In order to avoid getting out of range. When k? > index_limit we apply % index_limit on
                 # k, then Starting a new iteration on (index_limit, k % index_limit) cd (else part) From left to right
-                if k < self.app.table.tableSize:
+                if k < self.app.table.table_size:
                     # Oblique from down left to up right
                     if (0, k) != (k, 0):
                         self.create_line(self.places[0, k], self.places[k, 0])
@@ -78,8 +78,8 @@ class TableView(Canvas):
                 k = k + 2
             # End : oblique line
             # Horizontal and vertical lines
-            self.create_line(self.places[i, 0], self.places[i, self.app.table.tableSize - 1], width=3)
-            self.create_line(self.places[0, i], self.places[self.app.table.tableSize - 1, i], width=3)
+            self.create_line(self.places[i, 0], self.places[i, self.app.table.table_size - 1], width=3)
+            self.create_line(self.places[0, i], self.places[self.app.table.table_size - 1, i], width=3)
             # Drawing places
             for coord in self.app.table.places.keys():
                 x, y = self.places[coord]

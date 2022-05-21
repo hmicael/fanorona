@@ -11,7 +11,7 @@ class Place:
         self.line = line
         self.empty = True
         self.pawn = None
-        self.allowedMoves = allowed_moves  # (colMove, lineMove)
+        self.allowed_moves = allowed_moves  # (colMove, lineMove)
 
     def get_coords(self):
         """
