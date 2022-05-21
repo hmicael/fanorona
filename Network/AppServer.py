@@ -5,9 +5,9 @@ import socket
 import sys
 from threading import Lock
 
-from Fanorona.Application import Application
-from Fanorona.Network.TableViewNetwork import TableViewNetwork
-from Fanorona.Network.ThreadConnexion import *
+import Application
+import TableViewNetwork
+import ThreadConnexion
 
 
 class AppServer(Application):
@@ -32,9 +32,9 @@ class AppServer(Application):
         self.view = TableViewNetwork(self)
         self.view.draw()
         self.master.title('>>>>> SERVER <<<<<')
-        self.view.bind("<Button-1>", self.mouseDown)
-        self.view.bind("<Button1-Motion>", self.mouseMove)
-        self.view.bind("<Button1-ButtonRelease>", self.mouseUp)
+        self.view.bind("<Button-1>", self.mouse_down)
+        self.view.bind("<Button1-Motion>", self.mouse_move)
+        self.view.bind("<Button1-ButtonRelease>", self.mouse_up)
         self.bind('<Destroy>', self.close)
         # self.view.pack(padx=10, pady=10)
 
@@ -59,8 +59,8 @@ class AppServer(Application):
         Application.new(self)
         return self.getPawnsCoord()
 
-    def checkFinish(self):
-        finish = Application.checkFinish(self)
+    def check_finish(self):
+        finish = Application.check_finish(self)
         if finish:
             return "finish;{};{}".format(self.scores['red'], self.scores['yellow'])
         return False

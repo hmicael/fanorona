@@ -23,9 +23,9 @@ class AppClient(Application):
         self.view = TableViewNetwork(self)
         self.view.draw()
         self.master.title('>>>>> PLAY THIS FUCKING GAME <<<<<')
-        self.view.bind("<Button-1>", self.mouseDown)
-        self.view.bind("<Button1-Motion>", self.mouseMove)
-        self.view.bind("<Button1-ButtonRelease>", self.mouseUp)
+        self.view.bind("<Button-1>", self.mouse_down)
+        self.view.bind("<Button1-Motion>", self.mouse_move)
+        self.view.bind("<Button1-ButtonRelease>", self.mouse_up)
         self.bind('<Destroy>', self.close)
         self.view.pack(padx=10, pady=10)
 
@@ -55,40 +55,40 @@ class AppClient(Application):
     def close(self, event=None):
         self.threadConnexion.connexion.send("leave".encode("Utf8"))
 
-    def mouseDown(self, event=None, info=()):
+    def mouse_down(self, event=None, info=()):
         if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
         if not info:
             info = [event.x, event.y, self.player]
-        Application.mouseDown(self, event, info)
-        msg = "mouseDown;{};{};{}".format(info[0], info[1], self.player)
+        Application.mouse_down(self, event, info)
+        msg = "mouse_down;{};{};{}".format(info[0], info[1], self.player)
         try:
             self.threadConnexion.connexion.send(msg.encode("Utf8"))
         except BrokenPipeError:
             sys.exit()
 
-    def mouseMove(self, event=None, info=()):
+    def mouse_move(self, event=None, info=()):
         if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
         if not info:
             info = [event.x, event.y, self.player]
-        Application.mouseMove(self, event, info)
-        msg = "mouseMove;{};{};{}".format(info[0], info[1], self.player)
+        Application.mouse_move(self, event, info)
+        msg = "mouse_move;{};{};{}".format(info[0], info[1], self.player)
         try:
             self.threadConnexion.connexion.send(msg.encode("Utf8"))
         except BrokenPipeError:
             sys.exit()
 
-    def mouseUp(self, event=None, info=()):
+    def mouse_up(self, event=None, info=()):
         if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
         if not info:
             info = [event.x, event.y, self.player]
-        Application.mouseUp(self, event, info)
-        msg = "mouseUp;{};{};{}".format(info[0], info[1], self.player)
+        Application.mouse_up(self, event, info)
+        msg = "mouse_up;{};{};{}".format(info[0], info[1], self.player)
         try:
             self.threadConnexion.connexion.send(msg.encode("Utf8"))
         except BrokenPipeError:

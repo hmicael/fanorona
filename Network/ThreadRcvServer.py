@@ -3,7 +3,7 @@
 
 from threading import Thread
 
-from Fanorona.Network.AppServer import AppServer
+import AppServer
 
 
 class ThreadRcvServer(Thread):
@@ -44,21 +44,21 @@ class ThreadRcvServer(Thread):
                     self.appServer.lock.release()
                     for key in self.appServer.clientConnexions:
                         self.appServer.clientConnexions[key].send(msg.encode("Utf8"))
-                elif action in ["mouseDown", "mouseMove", "mouseUp"]:  # action;col;line;initiator
+                elif action in ["mouse_down", "mouse_move", "mouse_up"]:  # action;col;line;initiator
                     msg = msgClient.split(";")
-                    if len(msg) == 4: # To be sure if the msg is correct
+                    if len(msg) == 4:  # To be sure if the msg is correct
                         info = [int(msg[1]), int(msg[2]), ""]
                         if msg[3] in ["red", "yellow", "server"]:
                             info[2] = msg[3]
                         msg[3] = "server"  # because it's the server who initiate the action
                         msg = ";".join(msg)
                         self.appServer.lock.acquire()
-                        if action == "mouseDown":
-                            self.appServer.mouseDown(info=info)
-                        elif action == "mouseMove":
-                            self.appServer.mouseMove(info=info)
-                        elif action == "mouseUp":
-                            finish = self.appServer.mouseUp(info=info)
+                        if action == "mouse_down":
+                            self.appServer.mouse_down(info=info)
+                        elif action == "mouse_move":
+                            self.appServer.mouse_move(info=info)
+                        elif action == "mouse_up":
+                            finish = self.appServer.mouse_up(info=info)
                             if finish is not False:
                                 msg = finish
                         self.sendMsg(msg)

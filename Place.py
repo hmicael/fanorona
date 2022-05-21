@@ -6,20 +6,20 @@ class Place:
     Place where pawns are put
     """
 
-    def __init__(self, allowedMoves, col=-1, line=-1):
+    def __init__(self, allowed_moves, col=-1, line=-1):
         self.col = col
         self.line = line
         self.empty = True
         self.pawn = None
-        self.allowedMoves = allowedMoves  # (colMove, lineMove)
+        self.allowedMoves = allowed_moves  # (colMove, lineMove)
 
-    def getCoords(self):
+    def get_coords(self):
         """
         Function which return the coord of a places
         """
         return self.col, self.line
 
-    def placePawn(self, pawn):
+    def place_pawn(self, pawn):
         """
         Place a pawn on an empty place
         Return True if the action is possible, False if not
@@ -30,7 +30,7 @@ class Place:
             return True
         return False
 
-    def removePawn(self):
+    def remove_pawn(self):
         """
         Remove pawn on the place
         Return True if the action is possible, False if not

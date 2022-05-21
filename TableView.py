@@ -3,6 +3,7 @@
 
 from math import sqrt
 from tkinter import *
+
 from Place import *
 
 
@@ -36,66 +37,70 @@ class TableView(Canvas):
         self.colStart, self.lineStart = 0, 0
         # The place where the pawn start to be moved to
         self.startPlace = None
-        self.drawLinesAndPlaceOfPawn()
+        self.draw_lines_and_places()
 
-    def drawLinesAndPlaceOfPawn(self):
+    def draw_lines_and_places(self):
         """
-        Drawing different lines and the place of pawn and pawn
+        Draw different line of the Table
+        :return:
         """
         self.create_rectangle(self.margin, self.margin, self.width, self.height, width=7)
         k = 0
-        indexLimit = self.app.table.tableSize - 1
+        index_limit = self.app.table.tableSize - 1
         for i in range(0, self.app.table.tableSize):
             # Begin : oblique line
-            # If k < indexLimit * 2 because only one half of table is required to draw oblique lines
-            if k < indexLimit * 2:
-                # At first, we start the iteration on (0,0), (k,0), ..., (k?,0) where k? is the valid value < indexLimit
-                # In order to avoid getting out of range. When k? > indexLimit we apply % indexLimit on k, then
-                # Starting a new iteration on (indexLimit, k % indexLimit) cd (else part)
-                # From left to right
+            # If k < index_limit * 2 because only one half of table is required to draw oblique lines
+            if k < index_limit * 2:
+                # At first, we start the iteration on (0,0), (k,0), ..., (k?,0) where k? is the valid value <
+                # index_limit In order to avoid getting out of range. When k? > index_limit we apply % index_limit on
+                # k, then Starting a new iteration on (index_limit, k % index_limit) cd (else part) From left to right
                 if k < self.app.table.tableSize:
                     # Oblique from down left to up right
                     if (0, k) != (k, 0):
                         self.create_line(self.places[0, k], self.places[k, 0])
                     # Oblique from up left to down right
-                    if (k, 0) != (indexLimit, indexLimit - k):
-                        self.create_line(self.places[k, 0], self.places[indexLimit, indexLimit - k])
+                    if (k, 0) != (index_limit, index_limit - k):
+                        self.create_line(self.places[k, 0], self.places[index_limit, index_limit - k])
                 # Right to left
                 else:
                     #  Oblique from up right to down left
-                    if (indexLimit, k % indexLimit) != (k % indexLimit, indexLimit):
-                        self.create_line(self.places[indexLimit, k % indexLimit],
-                                         self.places[k % indexLimit, indexLimit])
-                    # When indexLimit % 2 == 1, the tracing is incoherent, so I add 1 to k, idk why but it works :)
+                    if (index_limit, k % index_limit) != (k % index_limit, index_limit):
+                        self.create_line(self.places[index_limit, k % index_limit],
+                                         self.places[k % index_limit, index_limit])
+                    # When index_limit % 2 == 1, the tracing is incoherent, so I add 1 to k, idk why but it works :)
                     kk = k
-                    if indexLimit % 2 == 1:
+                    if index_limit % 2 == 1:
                         kk = k + 1
                     #  Oblique from down right to up left
-                    if (indexLimit - (kk % indexLimit), indexLimit) != (0, kk % indexLimit):
-                        self.create_line(self.places[indexLimit - (kk % indexLimit), indexLimit],
-                                         self.places[0, kk % indexLimit])
+                    if (index_limit - (kk % index_limit), index_limit) != (0, kk % index_limit):
+                        self.create_line(self.places[index_limit - (kk % index_limit), index_limit],
+                                         self.places[0, kk % index_limit])
                 k = k + 2
             # End : oblique line
             # Horizontal and vertical lines
             self.create_line(self.places[i, 0], self.places[i, self.app.table.tableSize - 1], width=3)
             self.create_line(self.places[0, i], self.places[self.app.table.tableSize - 1, i], width=3)
-        # Drawing places or pawns
+            # Drawing places
+            for coord in self.app.table.places.keys():
+                x, y = self.places[coord]
+                self.create_oval(x - 15, y - 15, x + 15, y + 15, fill='black')
+
+    def draw_pawns(self):
+        """
+        Drawing pawns on the Table
+        """
+        self.pawns = []  # Reset of pawns
         for coord in self.app.table.places.keys():
             x, y = self.places[coord]
-            self.create_oval(x - 15, y - 15, x + 15, y + 15, fill='black')
             if self.app.table.places[coord].pawn is not None:
                 self.pawns.append(
                     (self.create_oval(x - 15, y - 15, x + 15, y + 15, fill=self.app.table.places[coord].pawn),))
 
-    def mouseDown(self, position):
+    def mouse_down(self, position):
         if type(position) not in (tuple, list):
             raise TypeError("Position must be a list")
         self.colStart, self.lineStart = int(position[0]), int(position[1])
-        self.startPlace = self.findPlaceByRealPosition((self.colStart, self.lineStart))
-        # Placing a pawn on an empty place
-        # if self.startPlace.pawn is None:
-        #     self.placePawn(self.startPlace)
-        #     self.startPlace = None
+        self.startPlace = self.find_place_by_real_position((self.colStart, self.lineStart))
 
         # Selecting a pawn
         # Canvas.find_closest is a function which return the closest element of the canvas
@@ -111,41 +116,41 @@ class TableView(Canvas):
         else:
             self.selectedItem = None
 
-    def mouseMove(self, position):
+    def mouse_move(self, position):
         if type(position) not in (tuple, list):
             raise TypeError("Position must be a list")
 
-        colDestination, lineDestination = int(position[0]), int(position[1])
-        xMove, yMove = colDestination - self.colStart, lineDestination - self.lineStart
+        col_destination, line_destination = int(position[0]), int(position[1])
+        x_move, y_move = col_destination - self.colStart, line_destination - self.lineStart
         if self.selectedItem and self.selectedItem in self.pawns:
-            self.move(self.selectedItem, xMove, yMove)
-            self.colStart, self.lineStart = colDestination, lineDestination
-            return xMove, yMove
+            self.move(self.selectedItem, x_move, y_move)
+            self.colStart, self.lineStart = col_destination, line_destination
+            return x_move, y_move
 
-    def mouseUp(self, position):
+    def mouse_up(self, position):
         if type(position) not in (tuple, list):
             raise TypeError("Position must be a list")
 
         if self.selectedItem in self.pawns:  # Only pawn can be moved
-            colDestination, lineDestination = int(position[0]), int(position[1])
-            destinationPlace = self.findPlaceByRealPosition((colDestination, lineDestination))
+            col_destination, line_destination = int(position[0]), int(position[1])
+            destination_place = self.find_place_by_real_position((col_destination, line_destination))
             self.itemconfig(self.selectedItem, width=1)
             # If the move if accepted, the pawn will be moved,
             # and the turn is incremented to allow the other player to play
-            if self.selectedItem and self.app.table.move(self.startPlace, destinationPlace):
-                colDestination, lineDestination = self.places[destinationPlace.getCoords()]
+            if self.selectedItem and self.app.table.move(self.startPlace, destination_place):
+                col_destination, line_destination = self.places[destination_place.get_coords()]
                 self.app.turn += 1
                 self.app.hits += 1
             else:  # the pawn is replaced to its start place
-                colDestination, lineDestination = self.places[self.startPlace.getCoords()]
+                col_destination, line_destination = self.places[self.startPlace.get_coords()]
             # Drawing the pawn
-            self.coords(self.selectedItem, colDestination - 15, lineDestination - 15, colDestination + 15,
-                        lineDestination + 15)
+            self.coords(self.selectedItem, col_destination - 15, line_destination - 15, col_destination + 15,
+                        line_destination + 15)
             self.selectedItem = None
             self.startPlace = None
-            return colDestination, lineDestination
+            return col_destination, line_destination
 
-    def findPlaceByRealPosition(self, position):
+    def find_place_by_real_position(self, position):
         """
         Return the <Place> according to the real position
         """
@@ -163,7 +168,7 @@ class TableView(Canvas):
                 coord = key
         return self.app.table.places[coord]
 
-    def placePawn(self, place: Place):
+    def place_pawn(self, place: Place):
         """
         Place a pawn on the pressed place
         """
@@ -171,8 +176,8 @@ class TableView(Canvas):
             color = 'red'
         else:
             color = 'yellow'
-        place.placePawn(color)
-        x, y = self.places[place.getCoords()]
+        place.place_pawn(color)
+        x, y = self.places[place.get_coords()]
         self.app.turn += 1
         self.pawns.append(
             (self.create_oval(x - 15, y - 15, x + 15, y + 15, fill=place.pawn),))

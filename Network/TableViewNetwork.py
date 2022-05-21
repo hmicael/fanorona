@@ -1,14 +1,14 @@
 # !/usr/bin/python3.8
 # -*- coding: utf-8 -*-
 
-from Fanorona.TableView import TableView
+import TableView
 
 
 class TableViewNetwork(TableView):
     def __init__(self, app):
         TableView.__init__(self, app)
 
-    def mouseDown(self, info):
+    def mouse_down(self, info):
         if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
@@ -30,7 +30,7 @@ class TableViewNetwork(TableView):
         else:
             self.selectedItem = None
 
-    def mouseUp(self, info):
+    def mouse_up(self, info):
         if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
@@ -41,12 +41,12 @@ class TableViewNetwork(TableView):
             # if the move if accepted, the pawn will be moved,
             # and the turn incremented to allow the other player to play
             if self.selectedItem and self.app.table.move(self.startPlace, destinationPlace):
-                colDestination, lineDestination = self.places[destinationPlace.getCoords()]
+                colDestination, lineDestination = self.places[destinationPlace.get_coords()]
                 if info[2] != "server":  # no need to change turn when it's the server who make the change
                     self.app.turn += 1
                 self.app.hits += 1
             else:  # the pawn is replaced to its start place
-                colDestination, lineDestination = self.places[self.startPlace.getCoords()]
+                colDestination, lineDestination = self.places[self.startPlace.get_coords()]
             # drawing the pawn
             self.coords(self.selectedItem, colDestination - 15, lineDestination - 15, colDestination + 15,
                         lineDestination + 15)

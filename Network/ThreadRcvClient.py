@@ -5,7 +5,7 @@ import socket
 import sys
 from threading import Thread
 
-from Fanorona.Network.AppClient import *
+import AppClient
 
 
 class ThreadRcvClient(Thread):
@@ -49,7 +49,7 @@ class ThreadRcvClient(Thread):
                     self.appClient.view.draw()
                     self.connexion.send("ok".encode("Utf8"))
                     self.appClient.lock.release()
-                elif action in ["mouseDown", "mouseMove", "mouseUp"]:  # action;col;line;initiator
+                elif action in ["mouse_down", "mouse_move", "mouse_up"]:  # action;col;line;initiator
                     msg = msgServer.split(";")
                     if len(msg) == 4:
                         info = [int(msg[1]), int(msg[2]), ""]
@@ -58,12 +58,12 @@ class ThreadRcvClient(Thread):
                         msg[3] = self.appClient.player  # because it's the player who initiate the action
                         msg = ";".join(msg)
                         self.appClient.lock.acquire()
-                        if action == "mouseDown":
-                            self.appClient.mouseDown(info=info)
-                        elif action == "mouseMove":
-                            self.appClient.mouseMove(info=info)
-                        elif action == "mouseUp":
-                            self.appClient.mouseUp(info=info)
+                        if action == "mouse_down":
+                            self.appClient.mouse_down(info=info)
+                        elif action == "mouse_move":
+                            self.appClient.mouse_move(info=info)
+                        elif action == "mouse_up":
+                            self.appClient.mouse_up(info=info)
                         self.connexion.send(msg.encode("Utf8"))
                         self.appClient.lock.release()
                 elif action == "finish":  # finish;redScore;yellowScore
@@ -71,5 +71,5 @@ class ThreadRcvClient(Thread):
                     self.appClient.lock.acquire()
                     self.appClient.scores["red"] = int(info[1])
                     self.appClient.scores["yellow"] = int(info[2])
-                    self.appClient.checkFinish()
+                    self.appClient.check_finish()
                     self.appClient.lock.release()

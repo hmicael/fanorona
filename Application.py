@@ -3,7 +3,6 @@
 
 import pickle
 import time
-from tkinter import *
 
 from Table import *
 from TableView import *
@@ -27,6 +26,7 @@ class Application(Frame):
         }
         self.view = None
         self.table = Table()
+        self.table.random_placing()
         self.labels["red"].pack(side=TOP)
         self.labels["yellow"].pack(side=BOTTOM)
         self.pack()
@@ -34,51 +34,51 @@ class Application(Frame):
 
     def spec(self):
         self.view = TableView(self)
-        #self.view.draw()
+        self.view.draw_pawns()
         self.master.title('>>>>> PLAY THIS FUCKING GAME <<<<<')
-        self.view.bind("<Button-1>", self.mouseDown)
-        self.view.bind("<Button1-Motion>", self.mouseMove)
-        self.view.bind("<Button1-ButtonRelease>", self.mouseUp)
+        self.view.bind("<Button-1>", self.mouse_down)
+        self.view.bind("<Button1-Motion>", self.mouse_move)
+        self.view.bind("<Button1-ButtonRelease>", self.mouse_up)
         self.bind('<Destroy>', self.close)
         self.view.pack(padx=10, pady=10)
         self.packing()
 
     def packing(self):
-        fileMenu = Menubutton(self, text='File')
-        menu1 = Menu(fileMenu)
+        file_menu = Menubutton(self, text='File')
+        menu1 = Menu(file_menu)
         menu1.add_command(label='New', underline=0, command=self.new)
         menu1.add_command(label='Save', underline=0, command=self.save)
         menu1.add_command(label='Restore', underline=0, command=self.restore)
         menu1.add_command(label='Exit', underline=0, command=self.close)
-        fileMenu.configure(menu=menu1)
-        fileMenu.pack(anchor=NW)
+        file_menu.configure(menu=menu1)
+        file_menu.pack(anchor=NW)
 
-    def mouseDown(self, event=None, info=()):
+    def mouse_down(self, event=None, info=()):
         if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
         if event and not info:
             info = [event.x, event.y, ""]
-        self.view.mouseDown(info)
+        self.view.mouse_down(info)
 
-    def mouseMove(self, event=None, info=()):
+    def mouse_move(self, event=None, info=()):
         if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
         if event and not info:
             info = [event.x, event.y, ""]
-        self.view.mouseMove(info)
+        self.view.mouse_move(info)
 
-    def mouseUp(self, event=None, info=()):
+    def mouse_up(self, event=None, info=()):
         if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
         if event and not info:
             info = [event.x, event.y, ""]
-        self.view.mouseUp(info)
-        return self.checkFinish()
+        self.view.mouse_up(info)
+        return self.check_finish()
 
-    def checkFinish(self):
+    def check_finish(self):
         if self.table.winner in ('red', 'yellow'):
             self.scores[self.table.winner] += 1
             text = "{} : {} points".format(self.table.winner.upper(), self.scores[self.table.winner])
@@ -86,9 +86,9 @@ class Application(Frame):
             self.table.winner = ""
             self.hits = 0
             self.table = Table()
-            self.table.randomPlacing()
+            self.table.random_placing()
             time.sleep(1)
-            self.view.draw()
+            self.view.draw_pawns()
             return True
         return False
 
@@ -97,8 +97,8 @@ class Application(Frame):
         self.turn = 0
         self.table = Table()
         time.sleep(0.5)
-        self.table.randomPlacing()
-        self.view.draw()
+        self.table.random_placing()
+        self.view.draw_pawns()
         self.scores = {
             "red": 0,
             "yellow": 0
@@ -135,10 +135,11 @@ class Application(Frame):
                 self.scores = data["scores"]
                 time.sleep(0.5)
                 # self.setView()
-                self.view.draw()
+                self.view.draw_pawns()
                 for key in self.labels.keys():
                     self.labels[key].config(text="{} : {} points".format(key.upper(), self.scores[key]))
             file.close()
+
 
 if __name__ == '__main__':
     Application().mainloop()

@@ -3,7 +3,7 @@
 
 from threading import Thread
 
-from Fanorona.Network.ThreadRcvServer import ThreadRcvServer
+import ThreadRcvServer
 
 
 class ThreadConnexion(Thread):
