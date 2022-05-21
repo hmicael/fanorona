@@ -3,6 +3,7 @@
 
 import pickle
 import time
+import traceback
 
 from Table import *
 from TableView import *
@@ -126,8 +127,17 @@ class Application(Frame):
             unpickler = pickle.Unpickler(file)
             try:
                 data = unpickler.load()
-            except:
-                print("Save is corrupted")
+            except pickle.UnpicklingError as e:
+                print(traceback.format_exc(e))
+                pass
+            except (AttributeError, EOFError, ImportError, IndexError) as e:
+                # secondary errors
+                print(traceback.format_exc(e))
+                pass
+            except Exception as e:
+                # everything else, possibly fatal
+                print(traceback.format_exc(e))
+                pass
             else:
                 self.table = data["table"]
                 self.hits = data["hits"]
