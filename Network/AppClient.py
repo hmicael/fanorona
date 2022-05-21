@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from threading import Lock
 
-from Fanorona.Application import Application
+from Application import Application
 from TableViewNetwork import TableViewNetwork
 from ThreadRcvClient import *
 

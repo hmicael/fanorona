@@ -1,5 +1,5 @@
+# !/usr/bin/python3.8
 # -*- coding: utf-8 -*-
-#!/usr/bin/python3.8
 from threading import Thread
 
 from Fanorona.Network.AppServer import AppServer

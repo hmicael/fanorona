@@ -1,5 +1,5 @@
+# !/usr/bin/python3.8
 # -*- coding: utf-8 -*-
-#!/usr/bin/python3.8
 import socket
 import sys
 from threading import Lock

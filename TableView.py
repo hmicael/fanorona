@@ -1,8 +1,9 @@
+# !/usr/bin/python3.8
 # -*- coding: utf-8 -*-
-#!/usr/bin/python3.8
 from math import sqrt
 from tkinter import *
 from Place import *
+
 
 class TableView(Canvas):
     """
@@ -101,7 +102,7 @@ class TableView(Canvas):
         # then the pawn can be selected for any move
         if self.find_closest(self.colStart, self.lineStart) in self.pawns and \
                 ((self.app.turn % 2 == 0 and self.startPlace.pawn == 'red') or (
-                self.app.turn % 2 == 1 and self.startPlace.pawn == 'yellow')):
+                        self.app.turn % 2 == 1 and self.startPlace.pawn == 'yellow')):
             self.selectedItem = self.find_closest(self.colStart, self.lineStart)
             self.itemconfig(self.selectedItem, width=3)
             # <lift> move the selected item to the first plan :
@@ -124,7 +125,7 @@ class TableView(Canvas):
         if type(position) not in (tuple, list):
             raise TypeError("Position must be a list")
 
-        if self.selectedItem in self.pawns: # Only pawn can be moved
+        if self.selectedItem in self.pawns:  # Only pawn can be moved
             colDestination, lineDestination = int(position[0]), int(position[1])
             destinationPlace = self.findPlaceByRealPosition((colDestination, lineDestination))
             self.itemconfig(self.selectedItem, width=1)
@@ -150,7 +151,7 @@ class TableView(Canvas):
         if type(position) != tuple:
             raise TypeError("Position must be a list")
 
-        distance = 1000 # 1000 just to get high distance
+        distance = 1000  # 1000 just to get high distance
         coord = (-1, -1)
         for key in self.places:
             # Calculate the distance between the given position and each place
