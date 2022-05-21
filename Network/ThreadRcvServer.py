@@ -1,6 +1,7 @@
 # !/usr/bin/python3.8
 # -*- coding: utf-8 -*-
-
+import socket
+import sys
 from threading import Thread
 
 import AppServer
@@ -19,8 +20,9 @@ class ThreadRcvServer(Thread):
         while 1:
             try:
                 msg_client = self.connexion.recv(1024).decode("Utf8")
-            except Exception:
-                break
+            except socket.error as (value, message):
+                print('socket.error - ' + message)
+                sys.exit()
             else:
                 action = msg_client.split(';')[0]
                 if action == "":

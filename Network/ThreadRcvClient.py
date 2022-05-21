@@ -16,8 +16,8 @@ class ThreadRcvClient(Thread):
         self.connexion = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             self.connexion.connect((host, port))
-        except socket.error:
-            print("Connexion error")
+        except socket.error as (value, message):
+            print('socket.error - ' + message)
             sys.exit()
         else:
             print("Connexion established")
@@ -27,7 +27,7 @@ class ThreadRcvClient(Thread):
         while 1:
             try:
                 msg_server = self.connexion.recv(1024).decode("Utf8")
-            except Exception:
+            except socket.error:
                 break
             else:
                 action = msg_server.split(';')[0]
