@@ -17,26 +17,26 @@ class TableView(Canvas):
         self.app = app
         self.configure(width=width, height=height)
         # Real width and height without margin
-        self.realWidth = width
-        self.realHeight = height
+        self.real_width = width
+        self.real_height = height
         self.margin = 25
         # Rest of width and height after removing margin
-        self.width = self.realWidth - self.margin
-        self.height = self.realHeight - self.margin
+        self.width = self.real_width - self.margin
+        self.height = self.real_height - self.margin
         # Width and height of a division of the Table according to the tableSize
-        self.wSub = (self.width - self.margin) / (self.app.table.tableSize - 1)
-        self.hSub = (self.height - self.margin) / (self.app.table.tableSize - 1)
+        self.width_sub = (self.width - self.margin) / (self.app.table.tableSize - 1)
+        self.height_sub = (self.height - self.margin) / (self.app.table.tableSize - 1)
         self.places = {}
         for line in range(0, self.app.table.tableSize):
             for col in range(0, self.app.table.tableSize):
                 # Setting the real position of a place in the GUI
-                self.places[col, line] = ((self.margin + self.wSub * col), (self.margin + self.hSub * line))
+                self.places[col, line] = ((self.margin + self.width_sub * col), (self.margin + self.height_sub * line))
         self.pawns = []  # List of pawns
-        self.selectedItem = None  # Selected pawn
+        self.selected_item = None  # Selected pawn
         # The starting position of a pawn when it's being moved
-        self.colStart, self.lineStart = 0, 0
+        self.col_start, self.lineStart = 0, 0
         # The place where the pawn start to be moved to
-        self.startPlace = None
+        self.start_place = None
         self.draw_lines_and_places()
 
     def draw_lines_and_places(self):
@@ -99,55 +99,55 @@ class TableView(Canvas):
     def mouse_down(self, position):
         if type(position) not in (tuple, list):
             raise TypeError("Position must be a list")
-        self.colStart, self.lineStart = int(position[0]), int(position[1])
-        self.startPlace = self.find_place_by_real_position((self.colStart, self.lineStart))
+        self.col_start, self.lineStart = int(position[0]), int(position[1])
+        self.start_place = self.find_place_by_real_position((self.col_start, self.lineStart))
 
         # Selecting a pawn
         # Canvas.find_closest is a function which return the closest element of the canvas
         # Here if the closest item is an pawn and if the turn match the correct color
         # then the pawn can be selected for any move
-        if self.find_closest(self.colStart, self.lineStart) in self.pawns and \
-                ((self.app.turn % 2 == 0 and self.startPlace.pawn == 'red') or (
-                        self.app.turn % 2 == 1 and self.startPlace.pawn == 'yellow')):
-            self.selectedItem = self.find_closest(self.colStart, self.lineStart)
-            self.itemconfig(self.selectedItem, width=3)
+        if self.find_closest(self.col_start, self.lineStart) in self.pawns and \
+                ((self.app.turn % 2 == 0 and self.start_place.pawn == 'red') or (
+                        self.app.turn % 2 == 1 and self.start_place.pawn == 'yellow')):
+            self.selected_item = self.find_closest(self.col_start, self.lineStart)
+            self.itemconfig(self.selected_item, width=3)
             # <lift> move the selected item to the first plan :
-            self.lift(self.selectedItem)
+            self.lift(self.selected_item)
         else:
-            self.selectedItem = None
+            self.selected_item = None
 
     def mouse_move(self, position):
         if type(position) not in (tuple, list):
             raise TypeError("Position must be a list")
 
         col_destination, line_destination = int(position[0]), int(position[1])
-        x_move, y_move = col_destination - self.colStart, line_destination - self.lineStart
-        if self.selectedItem and self.selectedItem in self.pawns:
-            self.move(self.selectedItem, x_move, y_move)
-            self.colStart, self.lineStart = col_destination, line_destination
+        x_move, y_move = col_destination - self.col_start, line_destination - self.lineStart
+        if self.selected_item and self.selected_item in self.pawns:
+            self.move(self.selected_item, x_move, y_move)
+            self.col_start, self.lineStart = col_destination, line_destination
             return x_move, y_move
 
     def mouse_up(self, position):
         if type(position) not in (tuple, list):
             raise TypeError("Position must be a list")
 
-        if self.selectedItem in self.pawns:  # Only pawn can be moved
+        if self.selected_item in self.pawns:  # Only pawn can be moved
             col_destination, line_destination = int(position[0]), int(position[1])
             destination_place = self.find_place_by_real_position((col_destination, line_destination))
-            self.itemconfig(self.selectedItem, width=1)
+            self.itemconfig(self.selected_item, width=1)
             # If the move if accepted, the pawn will be moved,
             # and the turn is incremented to allow the other player to play
-            if self.selectedItem and self.app.table.move(self.startPlace, destination_place):
+            if self.selected_item and self.app.table.move(self.start_place, destination_place):
                 col_destination, line_destination = self.places[destination_place.get_coords()]
                 self.app.turn += 1
                 self.app.hits += 1
             else:  # the pawn is replaced to its start place
-                col_destination, line_destination = self.places[self.startPlace.get_coords()]
+                col_destination, line_destination = self.places[self.start_place.get_coords()]
             # Drawing the pawn
-            self.coords(self.selectedItem, col_destination - 15, line_destination - 15, col_destination + 15,
+            self.coords(self.selected_item, col_destination - 15, line_destination - 15, col_destination + 15,
                         line_destination + 15)
-            self.selectedItem = None
-            self.startPlace = None
+            self.selected_item = None
+            self.start_place = None
             return col_destination, line_destination
 
     def find_place_by_real_position(self, position):

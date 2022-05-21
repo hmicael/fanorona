@@ -20,13 +20,13 @@ class AppServer(Application):
         self.lock = Lock()
         self.active = 1
         self.turn = -1  # -1 because there's 0 player at first
-        self.clientConnexions = {}
-        self.canStart = False
+        self.client_connexions = {}
+        self.can_start = False
         self.player = "server"
-        self.threadConnexion = None
+        self.thread_connexion = None
         self.host = host
         self.port = port
-        self.openConnexion()
+        self.open_connexion()
 
     def spec(self):
         self.view = TableViewNetwork(self)
@@ -38,26 +38,26 @@ class AppServer(Application):
         self.bind('<Destroy>', self.close)
         # self.view.pack(padx=10, pady=10)
 
-    def openConnexion(self):
+    def open_connexion(self):
         connexion = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             connexion.bind((self.host, self.port))
         except socket.error:
-            self.writeLog("Link to socket failed")
+            self.write_log("Link to socket failed")
             sys.exit()
         else:
-            self.threadConnexion = ThreadConnexion(self, connexion)
-            self.threadConnexion.start()
+            self.thread_connexion = ThreadConnexion(self, connexion)
+            self.thread_connexion.start()
 
     @staticmethod
-    def writeLog(text):
+    def write_log(text):
         with open('LogFile.txt', 'a') as file:
             file.write(text + "\n")
             file.close()
 
     def new(self):
         Application.new(self)
-        return self.getPawnsCoord()
+        return self.get_pawns_coord()
 
     def check_finish(self):
         finish = Application.check_finish(self)
@@ -65,34 +65,34 @@ class AppServer(Application):
             return "finish;{};{}".format(self.scores['red'], self.scores['yellow'])
         return False
 
-    def close(self, event=None):
-        for key in self.clientConnexions:
-            self.clientConnexions[key].send("end".encode("Utf8"))
-            self.clientConnexions[key].close()
-        if self.threadConnexion is not None:
-            self.threadConnexion.connexion.close()
-            self.threadConnexion.connexion = None
-            self.threadConnexion.stop = True
-        del self.threadConnexion
-        self.writeLog("Close Server")
+    def close(self):
+        for key in self.client_connexions:
+            self.client_connexions[key].send("end".encode("Utf8"))
+            self.client_connexions[key].close()
+        if self.thread_connexion is not None:
+            self.thread_connexion.connexion.close()
+            self.thread_connexion.connexion = None
+            self.thread_connexion.stop = True
+        del self.thread_connexion
+        self.write_log("Close Server")
         self.active = 0
         sys.exit()
 
-    def gameStart(self):
+    def game_start(self):
         """
         Method to check if the game can start
         """
-        if len(self.clientConnexions) == 2 and self.canStart is False:
-            self.canStart = True
+        if len(self.client_connexions) == 2 and self.can_start is False:
+            self.can_start = True
             return self.new()
         return False
 
-    def deletePlayer(self, colorThread):
-        del self.clientConnexions[colorThread]
-        self.canStart = False
-        return "leave;{}".format(colorThread)
+    def delete_player(self, thread_color):
+        del self.client_connexions[thread_color]
+        self.can_start = False
+        return "leave;{}".format(thread_color)
 
-    def getPawnsCoord(self):
+    def get_pawns_coord(self):
         """
         Return Pawn's coord in str: color;x;y
         """

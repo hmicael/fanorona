@@ -11,44 +11,40 @@ class TableViewNetwork(TableView):
     def mouse_down(self, info):
         if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
+        self.col_start, self.line_start = int(info[0]), int(info[1])
+        self.start_place = self.findPlaceByRealPosition((self.col_start, self.line_start))
 
-        self.colStart, self.lineStart = int(info[0]), int(info[1])
-        self.startPlace = self.findPlaceByRealPosition((self.colStart, self.lineStart))
-        # placing a pawn on an empty place
-        # if self.startPlace.pawn is None:
-        #     self.placePawn(self.startPlace)
-        #     self.startPlace = None
-        if self.find_closest(self.colStart, self.lineStart) in self.pawns and (
+        if self.find_closest(self.col_start, self.line_start) in self.pawns and (
                 info[2] == 'server' or  # selecting a pawn: only server or adequate turn/color can select a pawn
-                (self.app.turn % 2 == 0 and self.startPlace.pawn == 'red' == info[2]) or (
-                        self.app.turn % 2 == 1 and self.startPlace.pawn == 'yellow' == info[2])
+                (self.app.turn % 2 == 0 and self.start_place.pawn == 'red' == info[2]) or (
+                        self.app.turn % 2 == 1 and self.start_place.pawn == 'yellow' == info[2])
         ):
-            self.selectedItem = self.find_closest(self.colStart, self.lineStart)
-            self.itemconfig(self.selectedItem, width=3)
+            self.selected_item = self.find_closest(self.col_start, self.line_start)
+            self.itemconfig(self.selected_item, width=3)
             # <lift> move the selected item to the first plan :
-            self.lift(self.selectedItem)
+            self.lift(self.selected_item)
         else:
-            self.selectedItem = None
+            self.selected_item = None
 
     def mouse_up(self, info):
         if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
 
-        if self.selectedItem in self.pawns:
-            colDestination, lineDestination = int(info[0]), int(info[1])
-            destinationPlace = self.findPlaceByRealPosition((colDestination, lineDestination))
-            self.itemconfig(self.selectedItem, width=1)
+        if self.selected_item in self.pawns:
+            col_destination, line_destination = int(info[0]), int(info[1])
+            destination_place = self.find_place_by_real_position((col_destination, line_destination))
+            self.itemconfig(self.selected_item, width=1)
             # if the move if accepted, the pawn will be moved,
             # and the turn incremented to allow the other player to play
-            if self.selectedItem and self.app.table.move(self.startPlace, destinationPlace):
-                colDestination, lineDestination = self.places[destinationPlace.get_coords()]
+            if self.selected_item and self.app.table.move(self.start_place, destination_place):
+                col_destination, line_destination = self.places[destination_place.get_coords()]
                 if info[2] != "server":  # no need to change turn when it's the server who make the change
                     self.app.turn += 1
                 self.app.hits += 1
             else:  # the pawn is replaced to its start place
-                colDestination, lineDestination = self.places[self.startPlace.get_coords()]
+                col_destination, line_destination = self.places[self.start_place.get_coords()]
             # drawing the pawn
-            self.coords(self.selectedItem, colDestination - 15, lineDestination - 15, colDestination + 15,
-                        lineDestination + 15)
-            self.selectedItem = None
-            self.startPlace = None
+            self.coords(self.selected_item, col_destination - 15, line_destination - 15, col_destination + 15,
+                        line_destination + 15)
+            self.selected_item = None
+            self.start_place = None

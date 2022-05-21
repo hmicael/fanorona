@@ -16,8 +16,8 @@ class AppClient(Application):
         Application.__init__(self)
         self.lock = Lock()
         self.player = "server"
-        self.threadConnexion = ThreadRcvClient(self, host, port)
-        self.threadConnexion.start()
+        self.thread_connexion = ThreadRcvClient(self, host, port)
+        self.thread_connexion.start()
 
     def spec(self):
         self.view = TableViewNetwork(self)
@@ -29,7 +29,7 @@ class AppClient(Application):
         self.bind('<Destroy>', self.close)
         self.view.pack(padx=10, pady=10)
 
-    def setPawnByStr(self, info):
+    def set_pawn_by_str(self, info):
         """
         Set pawn place by str info: color,col,line
         """
@@ -45,15 +45,15 @@ class AppClient(Application):
             pass
 
     def new(self):
-        self.threadConnexion.connexion.send("new".encode("Utf8"))
+        self.thread_connexion.connexion.send("new".encode("Utf8"))
 
     def end(self):
-        self.threadConnexion.connexion.close()
+        self.thread_connexion.connexion.close()
         self.quit()
         sys.exit()
 
     def close(self, event=None):
-        self.threadConnexion.connexion.send("leave".encode("Utf8"))
+        self.thread_connexion.connexion.send("leave".encode("Utf8"))
 
     def mouse_down(self, event=None, info=()):
         if type(info) not in (tuple, list):
@@ -64,7 +64,7 @@ class AppClient(Application):
         Application.mouse_down(self, event, info)
         msg = "mouse_down;{};{};{}".format(info[0], info[1], self.player)
         try:
-            self.threadConnexion.connexion.send(msg.encode("Utf8"))
+            self.thread_connexion.connexion.send(msg.encode("Utf8"))
         except BrokenPipeError:
             sys.exit()
 
@@ -77,7 +77,7 @@ class AppClient(Application):
         Application.mouse_move(self, event, info)
         msg = "mouse_move;{};{};{}".format(info[0], info[1], self.player)
         try:
-            self.threadConnexion.connexion.send(msg.encode("Utf8"))
+            self.thread_connexion.connexion.send(msg.encode("Utf8"))
         except BrokenPipeError:
             sys.exit()
 
@@ -90,7 +90,7 @@ class AppClient(Application):
         Application.mouse_up(self, event, info)
         msg = "mouse_up;{};{};{}".format(info[0], info[1], self.player)
         try:
-            self.threadConnexion.connexion.send(msg.encode("Utf8"))
+            self.thread_connexion.connexion.send(msg.encode("Utf8"))
         except BrokenPipeError:
             sys.exit()
 

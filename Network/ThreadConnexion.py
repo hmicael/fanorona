@@ -11,37 +11,37 @@ class ThreadConnexion(Thread):
     Thread that manage new connexion
     """
 
-    def __init__(self, appServer, connexion):
+    def __init__(self, app_server, connexion):
         Thread.__init__(self)
-        self.appServer = appServer
+        self.app_server = app_server
         self.connexion = connexion
         self.stop = False
 
     def run(self) -> None:
-        self.appServer.writeLog("Server waiting for new connexions")
+        self.app_server.write_log("Server waiting for new connexions")
         self.connexion.listen(2)
         while self.stop is False:  # only 2 clients can connect to server
-            if self.connexion and len(self.appServer.clientConnexions) < 2:
-                newConnexion, infoConnexion = self.connexion.accept()
-                self.appServer.lock.acquire()
+            if self.connexion and len(self.app_server.client_connexions) < 2:
+                new_connexion, info_connexion = self.connexion.accept()
+                self.app_server.lock.acquire()
                 color = ["red", "yellow"]
-                self.appServer.turn += 1
-                color = color[self.appServer.turn % 2]
-                msgServer = "player;{};{}".format(self.appServer.turn, color)
-                threadRcvServer = ThreadRcvServer(self.appServer, newConnexion, color)
+                self.app_server.turn += 1
+                color = color[self.app_server.turn % 2]
+                msg_server = "player;{};{}".format(self.app_server.turn, color)
+                thread_rcv_server = ThreadRcvServer(self.app_server, new_connexion, color)
                 # add the new connexion to the list of connected clients
-                self.appServer.clientConnexions[color] = threadRcvServer.connexion
-                threadRcvServer.start()
-                threadName = threadRcvServer.getName()
-                self.appServer.writeLog("Client: {}, IP : {}:{} connected".format(
-                    threadName,
-                    infoConnexion[0],
-                    infoConnexion[1])
+                self.app_server.client_connexions[color] = thread_rcv_server.connexion
+                thread_rcv_server.start()
+                thread_name = thread_rcv_server.getName()
+                self.app_server.write_log("Client: {}, IP : {}:{} connected".format(
+                    thread_name,
+                    info_connexion[0],
+                    info_connexion[1])
                 )
-                self.appServer.writeLog(msgServer)
-                newConnexion.send("you;{};{}".format(self.appServer.turn, color).encode("Utf8"))
+                self.app_server.write_log(msg_server)
+                new_connexion.send("you;{};{}".format(self.app_server.turn, color).encode("Utf8"))
                 # Send information about the new created client to other client
-                for key in self.appServer.clientConnexions:
-                    if key != threadRcvServer.color:
-                        self.appServer.clientConnexions[key].send(msgServer.encode("Utf8"))
-                self.appServer.lock.release()
+                for key in self.app_server.client_connexions:
+                    if key != thread_rcv_server.color:
+                        self.app_server.client_connexions[key].send(msg_server.encode("Utf8"))
+                self.app_server.lock.release()
