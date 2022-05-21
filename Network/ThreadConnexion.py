@@ -1,5 +1,6 @@
 # !/usr/bin/python3.8
 # -*- coding: utf-8 -*-
+
 from threading import Thread
 
 from Fanorona.Network.ThreadRcvServer import ThreadRcvServer

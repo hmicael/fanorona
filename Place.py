@@ -1,5 +1,6 @@
 # !/usr/bin/python3.8
 # -*- coding: utf-8 -*-
+
 class Place:
     """
     Place where pawns are put

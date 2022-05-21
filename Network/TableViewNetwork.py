@@ -1,5 +1,6 @@
 # !/usr/bin/python3.8
 # -*- coding: utf-8 -*-
+
 from Fanorona.TableView import TableView
 
 

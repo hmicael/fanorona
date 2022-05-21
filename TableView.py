@@ -1,5 +1,6 @@
 # !/usr/bin/python3.8
 # -*- coding: utf-8 -*-
+
 from math import sqrt
 from tkinter import *
 from Place import *
