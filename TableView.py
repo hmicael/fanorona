@@ -80,10 +80,10 @@ class TableView(Canvas):
             # Horizontal and vertical lines
             self.create_line(self.places[i, 0], self.places[i, self.app.table.table_size - 1], width=3)
             self.create_line(self.places[0, i], self.places[self.app.table.table_size - 1, i], width=3)
-            # Drawing places
-            for coord in self.app.table.places.keys():
-                x, y = self.places[coord]
-                self.create_oval(x - 15, y - 15, x + 15, y + 15, fill='black')
+        # Drawing places
+        for coord in self.app.table.places.keys():
+            x, y = self.places[coord]
+            self.create_oval(x - 15, y - 15, x + 15, y + 15, fill='black')
 
     def draw_pawns(self):
         """
