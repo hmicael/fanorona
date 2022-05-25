@@ -69,10 +69,9 @@ class AppServer(Application):
         for key in self.client_connexions:
             self.client_connexions[key].send("end".encode("Utf8"))
             self.client_connexions[key].close()
-        if self.thread_connexion is not None:
-            self.thread_connexion.connexion.close()
-            self.thread_connexion.connexion = None
-            self.thread_connexion.stop = True
+        if self.thread_connexion:
+            self.thread_connexion.socket.close()
+            self.thread_connexion.can_stop = True
         del self.thread_connexion
         self.write_log("Close Server")
         self.active = 0
@@ -104,4 +103,4 @@ class AppServer(Application):
 
 
 if __name__ == '__main__':
-    AppServer("192.168.200.208", 40000).mainloop()
+    AppServer("192.168.200.137", 40000).mainloop()

@@ -1,6 +1,7 @@
 # !/usr/bin/python3.8
 # -*- coding: utf-8 -*-
 
+from socket import socket
 from threading import Thread
 
 from ThreadRcvServer import ThreadRcvServer
@@ -11,18 +12,18 @@ class ThreadConnexion(Thread):
     Thread that manage new connexion
     """
 
-    def __init__(self, app_server, connexion):
+    def __init__(self, app_server, socket: socket):
         Thread.__init__(self)
         self.app_server = app_server
-        self.connexion = connexion
-        self.stop = False
+        self.socket = socket
+        self.can_stop = False
 
     def run(self) -> None:
         self.app_server.write_log("Server waiting for new connexions")
-        self.connexion.listen(2)
-        while self.stop is False:  # only 2 clients can connect to server
-            if self.connexion and len(self.app_server.client_connexions) < 2:
-                new_connexion, info_connexion = self.connexion.accept()
+        self.socket.listen(2)
+        while self.can_stop:
+            if self.socket and len(self.app_server.client_connexions) < 2: # only 2 clients can connect to server
+                new_connexion, info_connexion = self.socket.accept()
                 self.app_server.lock.acquire()
                 color = ["red", "yellow"]
                 self.app_server.turn += 1

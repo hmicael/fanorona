@@ -1,2 +1,215 @@
+Server waiting for new connexions
+Client: Thread-2, IP : 192.168.200.228:45536 connected
+player;0;red
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Server waiting for new connexions
+Server waiting for new connexions
+Client: Thread-2, IP : 192.168.200.73:56844 connected
+player;0;red
+Server waiting for new connexions
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Server waiting for new connexions
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Server waiting for new connexions
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Client: Thread-2, IP : 192.168.200.73:58238 connected
+player;0;red
+leave;red
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Close Server
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
 Link to socket failed
 Link to socket failed
+Link to socket failed
+Link to socket failed
+Link to socket failed
+Link to socket failed
+Link to socket failed
+Link to socket failed
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Server waiting for new connexions
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Server waiting for new connexions
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
