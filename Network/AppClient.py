@@ -41,8 +41,6 @@ class AppClient(Application):
                 pass
             else:
                 self.table.places[col, line].pawn = info[0]
-        else:
-            pass
 
     def new(self):
         self.thread_connexion.connexion.send("new".encode("Utf8"))
@@ -96,4 +94,4 @@ class AppClient(Application):
 
 
 if __name__ == '__main__':
-    AppClient("192.168.200.208", 40000).mainloop()
+    AppClient("192.168.122.1", 40000).mainloop()

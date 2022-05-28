@@ -56,13 +56,14 @@ class AppServer(Application):
             file.close()
 
     def new(self):
+        print(f'Start new')
         Application.new(self)
         return self.get_pawns_coord()
 
     def check_finish(self):
         finish = Application.check_finish(self)
         if finish:
-            return "finish;{};{}".format(self.scores['red'], self.scores['yellow'])
+            return "finish;{};{}".format(self.scores["red"], self.scores["yellow"])
         return False
 
     def close(self, event=None):
@@ -70,19 +71,24 @@ class AppServer(Application):
             self.client_connexions[key].send("end".encode("Utf8"))
             self.client_connexions[key].close()
         if self.thread_connexion:
-            self.thread_connexion.socket.close()
             self.thread_connexion.can_stop = True
+            self.thread_connexion.socket.detach()
+            self.thread_connexion.socket.close()
+            del self.thread_connexion.socket
         del self.thread_connexion
         self.write_log("Close Server")
         self.active = 0
         sys.exit()
 
-    def game_start(self):
+    def can_game_start(self):
         """
         Method to check if the game can start
         """
+        print("start: can_game_start")
+        print(f'client_connexions: {self.client_connexions}')
         if len(self.client_connexions) == 2 and self.can_start is False:
             self.can_start = True
+            print(f'can_start: {self.can_start}')
             return self.new()
         return False
 
@@ -93,14 +99,16 @@ class AppServer(Application):
 
     def get_pawns_coord(self):
         """
-        Return Pawn's coord in str: color;x;y
+        Return Pawn's coord in str: color,x,y
         """
+        print(f'start: get_pawns_coord')
         coord = ""
         for key in self.table.places.keys():
             if self.table.places[key].pawn:
                 coord += ";" + self.table.places[key].pawn + "," + str(key[0]) + "," + str(key[1])
+        print(f'coord: {coord}')
         return coord
 
 
 if __name__ == '__main__':
-    AppServer("192.168.200.137", 40000).mainloop()
+    AppServer("192.168.122.1", 40000).mainloop()

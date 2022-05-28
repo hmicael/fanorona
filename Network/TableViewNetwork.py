@@ -9,15 +9,21 @@ class TableViewNetwork(TableView):
         TableView.__init__(self, app)
 
     def mouse_down(self, info):
+        """
+        Action on mouse_down
+        :param info: ()
+        :return:
+        """
         if type(info) not in (tuple, list):
             raise TypeError("Info must be a list")
+
         self.col_start, self.line_start = int(info[0]), int(info[1])
         self.start_place = self.find_place_by_real_position((self.col_start, self.line_start))
-
+        # selecting a pawn: only server or adequate turn/color can select a pawn
         if self.find_closest(self.col_start, self.line_start) in self.pawns and (
-                info[2] == 'server' or  # selecting a pawn: only server or adequate turn/color can select a pawn
-                (self.app.turn % 2 == 0 and self.start_place.pawn == 'red' == info[2]) or (
-                        self.app.turn % 2 == 1 and self.start_place.pawn == 'yellow' == info[2])
+                info[2] == "server" or (
+                self.app.turn % 2 == 0 and self.start_place.pawn == "red" == info[2]) or (
+                self.app.turn % 2 == 1 and self.start_place.pawn == "yellow" == info[2])
         ):
             self.selected_item = self.find_closest(self.col_start, self.line_start)
             self.itemconfig(self.selected_item, width=3)

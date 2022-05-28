@@ -27,7 +27,8 @@ class ThreadRcvServer(Thread):
                 action = msg_client.split(';')[0]
                 if action == "":
                     break
-                elif action == "leave":  # a player quit the game
+                # Action when a player quits the game
+                elif action == "leave":
                     self.app_server.lock.acquire()
                     msg_server = self.app_server.delete_player(self.color)
                     self.app_server.write_log(msg_server)
@@ -35,17 +36,23 @@ class ThreadRcvServer(Thread):
                     self.connexion.send("end".encode("Utf8"))
                     self.app_server.lock.release()
                     break
-                elif action == "client ok":
+                # Action when client is ready
+                elif action == "client ready":
                     self.app_server.lock.acquire()
-                    coord_pawn = self.app_server.game_start()
+                    print("CLIENT REAAASYYYY")
+                    coord_pawn = self.app_server.can_game_start()
+                    # If the game can start, it return a str which contains coord of pawns
                     if coord_pawn:
                         msg = "new"
                         msg += coord_pawn
+                    # Else tell the client to wait
                     else:
                         msg = "wait"
                     self.app_server.lock.release()
+                    # Send the msg to all clients
                     for key in self.app_server.client_connexions:
                         self.app_server.client_connexions[key].send(msg.encode("Utf8"))
+                # action on "mouse_down", "mouse_move", "mouse_up"
                 elif action in ["mouse_down", "mouse_move", "mouse_up"]:  # action;col;line;initiator
                     msg = msg_client.split(";")
                     if len(msg) == 4:  # To be sure if the msg is correct
@@ -65,6 +72,7 @@ class ThreadRcvServer(Thread):
                                 msg = finish
                         self.send_msg(msg)
                         self.app_server.lock.release()
+                # action when client asks for new game
                 elif action == "new":
                     self.app_server.lock.acquire()
                     msg = "new"

@@ -27,7 +27,7 @@ class Application(Frame):
         }
         self.view = None
         self.table = Table()
-        self.table.random_placing()
+        # self.table.random_placing()
         self.labels["red"].pack(side=TOP)
         self.labels["yellow"].pack(side=BOTTOM)
         self.pack()
@@ -80,7 +80,7 @@ class Application(Frame):
         return self.check_finish()
 
     def check_finish(self):
-        if self.table.winner in ('red', 'yellow'):
+        if self.table.winner in ("red", "yellow"):
             self.scores[self.table.winner] += 1
             text = "{} : {} points".format(self.table.winner.upper(), self.scores[self.table.winner])
             self.labels[self.table.winner].config(text=text)

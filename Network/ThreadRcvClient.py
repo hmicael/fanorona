@@ -30,17 +30,17 @@ class ThreadRcvClient(Thread):
             except socket.error:
                 break
             else:
-                action = msg_server.split(';')[0]
                 print(msg_server)
+                action = msg_server.split(';')[0]
                 if action == "you":  # you;turn;color
                     msg_server = msg_server.split(";")
-                    self.app_client.turn = msg_server[1]
-                    # self.appClient.player = msg_server[2]
-                    self.connexion.send("client ok".encode("Utf8"))
+                    self.app_client.turn = int(msg_server[1])
+                    self.app_client.player = msg_server[2]
+                    self.connexion.send("client ready".encode("Utf8"))
                 elif action == "end" or action == "":
                     self.app_client.end()
                     break
-                elif action == "new":  # new;(color,col,line)*
+                elif action == "new":  # action = new;(color,col,line);(color,col,line);...;(color,col,line)
                     msg_server = msg_server.split(";")
                     del msg_server[0]  # delete the string new
                     self.app_client.lock.acquire()
@@ -64,7 +64,7 @@ class ThreadRcvClient(Thread):
                             self.app_client.mouse_move(info=info)
                         elif action == "mouse_up":
                             self.app_client.mouse_up(info=info)
-                        self.connexion.send(msg.encode("Utf8"))
+                        # self.connexion.send(msg.encode("Utf8"))
                         self.app_client.lock.release()
                 elif action == "finish":  # finish;redScore;yellowScore
                     info = msg_server.split(";")

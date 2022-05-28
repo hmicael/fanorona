@@ -48,9 +48,9 @@ class Table:
             for line in range(0, self.table_size):
                 if self.places[col, line].pawn is None:
                     print('O', end=" ")
-                elif self.places[col, line].pawn == 'yellow':
+                elif self.places[col, line].pawn == "yellow":
                     print('Y', end=" ")
-                elif self.places[col, line].pawn == 'red':
+                elif self.places[col, line].pawn == "red":
                     print("R", end=" ")
             print("")
         print("")

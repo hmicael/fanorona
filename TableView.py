@@ -109,8 +109,8 @@ class TableView(Canvas):
         # Here if the closest item is an pawn and if the turn match the correct color
         # then the pawn can be selected for any move
         if self.find_closest(self.col_start, self.line_start) in self.pawns and \
-                ((self.app.turn % 2 == 0 and self.start_place.pawn == 'red') or (
-                        self.app.turn % 2 == 1 and self.start_place.pawn == 'yellow')):
+                ((self.app.turn % 2 == 0 and self.start_place.pawn == "red") or (
+                        self.app.turn % 2 == 1 and self.start_place.pawn == "yellow")):
             self.selected_item = self.find_closest(self.col_start, self.line_start)
             self.itemconfig(self.selected_item, width=3)
             # <lift> move the selected item to the first plan :
@@ -175,9 +175,9 @@ class TableView(Canvas):
         Place a pawn on the pressed place
         """
         if self.app.turn % 2 == 0:
-            color = 'red'
+            color = "red"
         else:
-            color = 'yellow'
+            color = "yellow"
         place.place_pawn(color)
         x, y = self.places[place.get_coords()]
         self.app.turn += 1

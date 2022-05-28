@@ -21,7 +21,7 @@ class ThreadConnexion(Thread):
     def run(self) -> None:
         self.app_server.write_log("Server waiting for new connexions")
         self.socket.listen(2)
-        while self.can_stop:
+        while not self.can_stop:
             if self.socket and len(self.app_server.client_connexions) < 2: # only 2 clients can connect to server
                 new_connexion, info_connexion = self.socket.accept()
                 self.app_server.lock.acquire()
@@ -33,9 +33,8 @@ class ThreadConnexion(Thread):
                 # add the new connexion to the list of connected clients
                 self.app_server.client_connexions[color] = thread_rcv_server.connexion
                 thread_rcv_server.start()
-                thread_name = thread_rcv_server.getName()
                 self.app_server.write_log("Client: {}, IP : {}:{} connected".format(
-                    thread_name,
+                    thread_rcv_server.getName(),
                     info_connexion[0],
                     info_connexion[1])
                 )
