@@ -23,7 +23,7 @@ class TableViewNetwork(TableView):
         if self.find_closest(self.col_start, self.line_start) in self.pawns and (
                 info[2] == "server" or (
                 self.app.turn % 2 == 0 and self.start_place.pawn == "red" == info[2]) or (
-                self.app.turn % 2 == 1 and self.start_place.pawn == "yellow" == info[2])
+                        self.app.turn % 2 == 1 and self.start_place.pawn == "yellow" == info[2])
         ):
             self.selected_item = self.find_closest(self.col_start, self.line_start)
             self.itemconfig(self.selected_item, width=3)

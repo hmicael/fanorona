@@ -22,7 +22,7 @@ class ThreadConnexion(Thread):
         self.app_server.write_log("Server waiting for new connexions")
         self.socket.listen(2)
         while not self.can_stop:
-            if self.socket and len(self.app_server.client_connexions) < 2: # only 2 clients can connect to server
+            if self.socket and len(self.app_server.client_connexions) < 2:  # only 2 clients can connect to server
                 new_connexion, info_connexion = self.socket.accept()
                 self.app_server.lock.acquire()
                 color = ["red", "yellow"]

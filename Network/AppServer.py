@@ -5,9 +5,9 @@ import socket
 import sys
 from threading import Lock
 
+import ThreadConnexion
 from Application import Application
 from TableViewNetwork import TableViewNetwork
-import ThreadConnexion
 
 
 class AppServer(Application):
@@ -28,15 +28,13 @@ class AppServer(Application):
         self.port = port
         self.open_connexion()
 
-    def spec(self):
+    def set_view(self):
         self.view = TableViewNetwork(self)
-        self.view.draw_pawns()
+
+    def set_view_button_action(self):
         self.master.title('>>>>> SERVER <<<<<')
-        self.view.bind("<Button-1>", self.mouse_down)
-        self.view.bind("<Button1-Motion>", self.mouse_move)
-        self.view.bind("<Button1-ButtonRelease>", self.mouse_up)
-        self.bind('<Destroy>', self.close)
-        # self.view.pack(padx=10, pady=10)
+        self.bind('<Destroy>', self.pop_quit_choice)
+        self.master.protocol("WM_DELETE_WINDOW", self.pop_quit_choice)
 
     def open_connexion(self):
         connexion = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -55,7 +53,7 @@ class AppServer(Application):
             file.write(text + "\n")
             file.close()
 
-    def new(self):
+    def new(self, event=None):
         print(f'Start new')
         Application.new(self)
         return self.get_pawns_coord()
@@ -111,4 +109,4 @@ class AppServer(Application):
 
 
 if __name__ == '__main__':
-    AppServer("192.168.122.1", 40000).mainloop()
+    AppServer("192.168.200.167", 40000).mainloop()

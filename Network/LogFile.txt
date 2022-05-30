@@ -5,3 +5,17 @@ Client: Thread-3, IP : 192.168.122.1:54944 connected
 player;1;yellow
 leave;red
 leave;yellow
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Close Server
+Server waiting for new connexions
+Client: Thread-2, IP : 192.168.200.167:58030 connected
+player;0;red
+leave;red
+Server waiting for new connexions
+Client: Thread-2, IP : 192.168.200.167:58118 connected
+player;0;red
+leave;red
+Server waiting for new connexions
+Close Server

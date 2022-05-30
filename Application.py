@@ -4,6 +4,7 @@
 import pickle
 import time
 import traceback
+from tkinter import messagebox
 
 from Table import *
 from TableView import *
@@ -30,29 +31,45 @@ class Application(Frame):
         # self.table.random_placing()
         self.labels["red"].pack(side=TOP)
         self.labels["yellow"].pack(side=BOTTOM)
-        self.pack()
-        self.spec()
 
-    def spec(self):
+        self.set_view()
+        self.set_view_button_action()
+        self.pack()
+
+    def set_view(self):
         self.view = TableView(self)
+
+    def set_view_button_action(self):
         self.view.draw_pawns()
         self.master.title('>>>>> PLAY THIS FUCKING GAME <<<<<')
         self.view.bind("<Button-1>", self.mouse_down)
         self.view.bind("<Button1-Motion>", self.mouse_move)
         self.view.bind("<Button1-ButtonRelease>", self.mouse_up)
-        self.bind('<Destroy>', self.close)
+        self.bind('<Destroy>', self.pop_quit_choice)
+        self.master.protocol("WM_DELETE_WINDOW", self.pop_quit_choice)
+        self.set_menu_bar()
         self.view.pack(padx=10, pady=10)
-        self.packing()
 
-    def packing(self):
-        file_menu = Menubutton(self, text='File')
-        menu1 = Menu(file_menu)
-        menu1.add_command(label='New', underline=0, command=self.new)
-        menu1.add_command(label='Save', underline=0, command=self.save)
-        menu1.add_command(label='Restore', underline=0, command=self.restore)
-        menu1.add_command(label='Exit', underline=0, command=self.close)
-        file_menu.configure(menu=menu1)
-        file_menu.pack(anchor=NW)
+    def set_menu_bar(self):
+        menu_bar = Menu(self)
+        menu_file = Menu(menu_bar, tearoff=0)
+        menu_file.add_command(label='New', underline=0, accelerator="Ctrl+N", command=self.new)
+        menu_file.add_command(label='Save', underline=0, accelerator="Ctrl+S", command=self.save)
+        menu_file.add_command(label='Restore', underline=0, accelerator="Ctrl+R", command=self.restore)
+        menu_file.add_separator()
+        menu_file.add_command(label='Exit', underline=1, accelerator="Ctrl+Q", command=self.pop_quit_choice)
+        menu_bar.add_cascade(label="File", menu=menu_file)
+        self.master.config(menu=menu_bar)
+        self.bind_all("<Control-n>", self.new)
+        self.bind_all("<Control-s>", self.save)
+        self.bind_all("<Control-r>", self.restore)
+        self.bind_all("<Control-q>", self.pop_quit_choice)
+
+    def pop_quit_choice(self, event=None):
+        want_to_quit = messagebox.askyesno(
+            message="Do you want to quit the game?", icon="question", title="Quit")
+        if want_to_quit:
+            self.close()
 
     def mouse_down(self, event=None, info=()):
         if type(info) not in (tuple, list):
@@ -83,17 +100,21 @@ class Application(Frame):
         if self.table.winner in ("red", "yellow"):
             self.scores[self.table.winner] += 1
             text = "{} : {} points".format(self.table.winner.upper(), self.scores[self.table.winner])
-            self.labels[self.table.winner].config(text=text)
-            self.table.winner = ""
-            self.hits = 0
-            self.table = Table()
-            self.table.random_placing()
-            time.sleep(1)
-            self.view.draw_pawns()
-            return True
+            replay = messagebox.askyesno(
+                message="Do you want to continue ?", icon="question", title="Replay")
+            if replay:
+                self.labels[self.table.winner].config(text=text)
+                self.table.winner = ""
+                self.hits = 0
+                self.table = Table()
+                self.table.random_placing()
+                self.view.draw_pawns()
+                return True
+            else:
+                self.close()
         return False
 
-    def new(self):
+    def new(self, event=None):
         self.hits = 0
         self.turn = 0
         self.table = Table()
@@ -110,7 +131,7 @@ class Application(Frame):
     def close(self, event=None):
         sys.exit()
 
-    def save(self):
+    def save(self, event=None):
         with open('data.txt', 'wb') as file:
             pickler = pickle.Pickler(file)
             data = {
@@ -122,7 +143,7 @@ class Application(Frame):
             pickler.dump(data)
             file.close()
 
-    def restore(self):
+    def restore(self, event=None):
         with open('data.txt', 'rb') as file:
             unpickler = pickle.Unpickler(file)
             try:

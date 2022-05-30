@@ -19,15 +19,8 @@ class AppClient(Application):
         self.thread_connexion = ThreadRcvClient(self, host, port)
         self.thread_connexion.start()
 
-    def spec(self):
+    def set_view(self):
         self.view = TableViewNetwork(self)
-        self.view.draw_pawns()
-        self.master.title('>>>>> PLAY THIS FUCKING GAME <<<<<')
-        self.view.bind("<Button-1>", self.mouse_down)
-        self.view.bind("<Button1-Motion>", self.mouse_move)
-        self.view.bind("<Button1-ButtonRelease>", self.mouse_up)
-        self.bind('<Destroy>', self.close)
-        self.view.pack(padx=10, pady=10)
 
     def set_pawn_by_str(self, info):
         """
@@ -42,7 +35,7 @@ class AppClient(Application):
             else:
                 self.table.places[col, line].pawn = info[0]
 
-    def new(self):
+    def new(self, event=None):
         self.thread_connexion.connexion.send("new".encode("Utf8"))
 
     def end(self):
@@ -94,4 +87,4 @@ class AppClient(Application):
 
 
 if __name__ == '__main__':
-    AppClient("192.168.122.1", 40000).mainloop()
+    AppClient("192.168.200.167", 40000).mainloop()
