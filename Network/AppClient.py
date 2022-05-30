@@ -1,6 +1,7 @@
 #!/usr/bin/python3.8
 # -*- coding: utf-8 -*-
 from threading import Lock
+from tkinter import Label
 
 from Application import Application
 from TableViewNetwork import TableViewNetwork
@@ -16,6 +17,8 @@ class AppClient(Application):
         Application.__init__(self)
         self.lock = Lock()
         self.player = "server"
+        self.label_info = Label(self, text="Information")
+        self.label_info.pack()
         self.thread_connexion = ThreadRcvClient(self, host, port)
         self.thread_connexion.start()
 
@@ -79,6 +82,7 @@ class AppClient(Application):
         if not info:
             info = [event.x, event.y, self.player]
         Application.mouse_up(self, event, info)
+        self.label_info.config(text="Status: Opponent Turn")
         msg = "mouse_up;{};{};{}".format(info[0], info[1], self.player)
         try:
             self.thread_connexion.connexion.send(msg.encode("Utf8"))
@@ -87,4 +91,4 @@ class AppClient(Application):
 
 
 if __name__ == '__main__':
-    AppClient("192.168.200.167", 40000).mainloop()
+    AppClient("192.168.182.8", 40000).mainloop()
