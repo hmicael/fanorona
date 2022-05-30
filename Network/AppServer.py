@@ -54,7 +54,6 @@ class AppServer(Application):
             file.close()
 
     def new(self, event=None):
-        print(f'Start new')
         Application.new(self)
         return self.get_pawns_coord()
 
@@ -82,11 +81,8 @@ class AppServer(Application):
         """
         Method to check if the game can start
         """
-        print("start: can_game_start")
-        print(f'client_connexions: {self.client_connexions}')
         if len(self.client_connexions) == 2 and self.can_start is False:
             self.can_start = True
-            print(f'can_start: {self.can_start}')
             return self.new()
         return False
 
@@ -99,12 +95,10 @@ class AppServer(Application):
         """
         Return Pawn's coord in str: color,x,y
         """
-        print(f'start: get_pawns_coord')
         coord = ""
         for key in self.table.places.keys():
             if self.table.places[key].pawn:
                 coord += ";" + self.table.places[key].pawn + "," + str(key[0]) + "," + str(key[1])
-        print(f'coord: {coord}')
         return coord
 
 

@@ -39,7 +39,6 @@ class ThreadRcvServer(Thread):
                 # Action when client is ready
                 elif action == "client ready":
                     self.app_server.lock.acquire()
-                    print("CLIENT REAAASYYYY")
                     coord_pawn = self.app_server.can_game_start()
                     # If the game can start, it return a str which contains coord of pawns
                     if coord_pawn:
