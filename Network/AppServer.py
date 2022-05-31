@@ -64,17 +64,17 @@ class AppServer(Application):
         return False
 
     def close(self, event=None):
+        print("Begin close")
         for key in self.client_connexions:
             self.client_connexions[key].send("end".encode("Utf8"))
             self.client_connexions[key].close()
         if self.thread_connexion:
             self.thread_connexion.can_stop = True
-            self.thread_connexion.socket.detach()
+            self.thread_connexion.socket.shutdown(socket.SHUT_RDWR)
             self.thread_connexion.socket.close()
-            del self.thread_connexion.socket
-        del self.thread_connexion
         self.write_log("Close Server")
         self.active = 0
+        print("End close")
         sys.exit()
 
     def can_game_start(self):

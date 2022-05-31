@@ -1,47 +1,14 @@
 Server waiting for new connexions
-Client: Thread-2, IP : 192.168.122.1:54942 connected
-player;0;red
-Client: Thread-3, IP : 192.168.122.1:54944 connected
-player;1;yellow
-leave;red
-leave;yellow
+Close Server
+Server waiting for new connexions
+Close Server
 Server waiting for new connexions
 Close Server
 Server waiting for new connexions
 Close Server
 Server waiting for new connexions
-Client: Thread-2, IP : 192.168.200.167:58030 connected
-player;0;red
-leave;red
-Server waiting for new connexions
-Client: Thread-2, IP : 192.168.200.167:58118 connected
-player;0;red
-leave;red
+Close Server
 Server waiting for new connexions
 Close Server
 Server waiting for new connexions
-Client: Thread-2, IP : 192.168.182.8:59852 connected
-player;0;red
-Client: Thread-3, IP : 192.168.182.8:59854 connected
-player;1;yellow
-leave;red
-leave;yellow
 Close Server
-Server waiting for new connexions
-Client: Thread-2, IP : 192.168.182.8:59858 connected
-player;0;red
-Client: Thread-3, IP : 192.168.182.8:59860 connected
-player;1;yellow
-leave;red
-leave;yellow
-Server waiting for new connexions
-Client: Thread-2, IP : 192.168.182.8:59864 connected
-player;0;red
-Client: Thread-3, IP : 192.168.182.8:59866 connected
-player;1;yellow
-leave;red
-leave;yellow
-Server waiting for new connexions
-Client: Thread-2, IP : 192.168.200.167:39828 connected
-player;0;red
-leave;red
