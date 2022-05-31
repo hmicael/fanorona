@@ -40,6 +40,7 @@ class AppServer(Application):
         connexion = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             connexion.bind((self.host, self.port))
+            connexion.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         except socket.error:
             self.write_log("Link to socket failed")
             sys.exit()
@@ -64,7 +65,6 @@ class AppServer(Application):
         return False
 
     def close(self, event=None):
-        print("Begin close")
         for key in self.client_connexions:
             self.client_connexions[key].send("end".encode("Utf8"))
             self.client_connexions[key].close()
@@ -74,7 +74,6 @@ class AppServer(Application):
             self.thread_connexion.socket.close()
         self.write_log("Close Server")
         self.active = 0
-        print("End close")
         sys.exit()
 
     def can_game_start(self):
