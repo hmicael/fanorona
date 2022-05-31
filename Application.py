@@ -11,7 +11,9 @@ from TableView import *
 
 
 class Application(Frame):
-    """Fenêtre principale de l'application"""
+    """
+    Application windows
+    """
 
     def __init__(self):
         Frame.__init__(self)
@@ -22,32 +24,33 @@ class Application(Frame):
             "red": 0,
             "yellow": 0
         }
-        self.labels = {
-            "red": Label(text="RED: {} points".format(self.scores["red"])),
-            "yellow": Label(text="YELLOW: {} points".format(self.scores["yellow"])),
-        }
         self.view = None
         self.table = Table()
+        scores_frame = Frame(self)
+        self.labels = {
+            "red": Label(scores_frame, text="RED: {}".format(self.scores["red"])),
+            "yellow": Label(scores_frame, text="YELLOW: {}".format(self.scores["yellow"])),
+        }
         # self.table.random_placing()
-        self.labels["red"].pack(side=TOP)
-        self.labels["yellow"].pack(side=BOTTOM)
-
+        self.pack(fill="x")
+        self.labels["red"].grid(row=0, column=0, sticky="w")
+        self.labels["yellow"].grid(row=0, column=1, sticky="e")
+        scores_frame.pack()
         self.set_view()
-        self.set_view_button_action()
-        self.pack()
+        self.bind_mouse_action()
+        self.set_menu_bar()
 
     def set_view(self):
         self.view = TableView(self)
-
-    def set_view_button_action(self):
         self.view.draw_pawns()
-        self.master.title('>>>>> PLAY THIS FUCKING GAME <<<<<')
+
+    def bind_mouse_action(self):
+        self.master.title('>>>>> FANORONA <<<<<')
         self.view.bind("<Button-1>", self.mouse_down)
         self.view.bind("<Button1-Motion>", self.mouse_move)
         self.view.bind("<Button1-ButtonRelease>", self.mouse_up)
         self.bind('<Destroy>', self.pop_quit_choice)
         self.master.protocol("WM_DELETE_WINDOW", self.pop_quit_choice)
-        self.set_menu_bar()
         self.view.pack(padx=10, pady=10)
 
     def set_menu_bar(self):
@@ -99,7 +102,7 @@ class Application(Frame):
     def check_finish(self):
         if self.table.winner in ("red", "yellow"):
             self.scores[self.table.winner] += 1
-            text = "{} : {} points".format(self.table.winner.upper(), self.scores[self.table.winner])
+            text = "{}: {}".format(self.table.winner.upper(), self.scores[self.table.winner])
             replay = messagebox.askyesno(
                 message="Do you want to continue ?", icon="question", title="Replay")
             if replay:
@@ -126,7 +129,7 @@ class Application(Frame):
             "yellow": 0
         }
         for key in self.labels.keys():
-            self.labels[key].config(text="{} : {} points".format(key.upper(), self.scores[key]))
+            self.labels[key].config(text="{} : {}".format(key.upper(), self.scores[key]))
 
     def close(self, event=None):
         sys.exit()
@@ -168,7 +171,7 @@ class Application(Frame):
                 # self.setView()
                 self.view.draw_pawns()
                 for key in self.labels.keys():
-                    self.labels[key].config(text="{} : {} points".format(key.upper(), self.scores[key]))
+                    self.labels[key].config(text="{} : {}".format(key.upper(), self.scores[key]))
             file.close()
 
 

@@ -24,6 +24,14 @@ class AppClient(Application):
 
     def set_view(self):
         self.view = TableViewNetwork(self)
+        self.view.draw_pawns()
+
+    def set_menu_bar(self):
+        """
+        Player on network don't need Menu
+        :return:
+        """
+        pass
 
     def set_pawn_by_str(self, info):
         """
@@ -91,4 +99,4 @@ class AppClient(Application):
 
 
 if __name__ == '__main__':
-    AppClient("192.168.182.8", 40000).mainloop()
+    AppClient("192.168.200.167", 40000).mainloop()

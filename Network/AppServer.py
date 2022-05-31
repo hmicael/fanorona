@@ -31,7 +31,7 @@ class AppServer(Application):
     def set_view(self):
         self.view = TableViewNetwork(self)
 
-    def set_view_button_action(self):
+    def bind_mouse_action(self):
         self.master.title('>>>>> SERVER <<<<<')
         self.bind('<Destroy>', self.pop_quit_choice)
         self.master.protocol("WM_DELETE_WINDOW", self.pop_quit_choice)
@@ -103,4 +103,4 @@ class AppServer(Application):
 
 
 if __name__ == '__main__':
-    AppServer("192.168.182.8", 40000).mainloop()
+    AppServer("192.168.200.167", 40000).mainloop()

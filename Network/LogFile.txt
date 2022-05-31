@@ -41,3 +41,7 @@ Client: Thread-3, IP : 192.168.182.8:59866 connected
 player;1;yellow
 leave;red
 leave;yellow
+Server waiting for new connexions
+Client: Thread-2, IP : 192.168.200.167:39828 connected
+player;0;red
+leave;red
